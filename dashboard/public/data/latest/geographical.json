@@ -1,9 +1,9 @@
 {
-  "timestamp": "2025-12-12T17:29:31.956Z",
+  "timestamp": "2025-12-12T17:33:30.937Z",
   "nodesByCountry": [
     {
       "countryCode": "US",
-      "nodeCount": 1247
+      "nodeCount": 1245
     },
     {
       "countryCode": "DE",
@@ -115,7 +115,7 @@
     },
     {
       "countryCode": "GR",
-      "nodeCount": 9
+      "nodeCount": 10
     },
     {
       "countryCode": "NO",
