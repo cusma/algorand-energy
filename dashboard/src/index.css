@@ -1,0 +1,99 @@
+@import 'tailwindcss';
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Official shadcn/ui New York theme with Slate base color */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.129 0.042 264.695);
+
+  --color-primary: oklch(0.208 0.042 265.755);
+  --color-primary-foreground: oklch(0.984 0.003 247.858);
+
+  --color-secondary: oklch(0.968 0.007 247.896);
+  --color-secondary-foreground: oklch(0.208 0.042 265.755);
+
+  --color-muted: oklch(0.968 0.007 247.896);
+  --color-muted-foreground: oklch(0.554 0.046 257.417);
+
+  --color-accent: oklch(0.968 0.007 247.896);
+  --color-accent-foreground: oklch(0.208 0.042 265.755);
+
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-destructive-foreground: oklch(0.984 0.003 247.858);
+
+  --color-border: oklch(0.929 0.013 255.508);
+  --color-input: oklch(0.929 0.013 255.508);
+  --color-ring: oklch(0.704 0.04 256.788);
+
+  --color-card: oklch(1 0 0);
+  --color-card-foreground: oklch(0.129 0.042 264.695);
+
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.129 0.042 264.695);
+
+  /* Stat visualization colors */
+  --color-stat-teal: #14b8a6;
+  --color-stat-green: #22c55e;
+  --color-stat-indigo: #6366f1;
+  --color-stat-cyan: #06b6d4;
+  --color-stat-violet: #8b5cf6;
+  --color-stat-blue: #3b82f6;
+}
+
+.dark {
+  --color-background: oklch(0.129 0.042 264.695);
+  --color-foreground: oklch(0.984 0.003 247.858);
+
+  --color-primary: oklch(0.984 0.003 247.858);
+  --color-primary-foreground: oklch(0.208 0.042 265.755);
+
+  --color-secondary: oklch(0.221 0.042 264.695);
+  --color-secondary-foreground: oklch(0.984 0.003 247.858);
+
+  --color-muted: oklch(0.221 0.042 264.695);
+  --color-muted-foreground: oklch(0.704 0.04 256.788);
+
+  --color-accent: oklch(0.221 0.042 264.695);
+  --color-accent-foreground: oklch(0.984 0.003 247.858);
+
+  --color-destructive: oklch(0.631 0.237 29.699);
+  --color-destructive-foreground: oklch(0.984 0.003 247.858);
+
+  --color-border: oklch(0.221 0.042 264.695);
+  --color-input: oklch(0.221 0.042 264.695);
+  --color-ring: oklch(0.554 0.046 257.417);
+
+  --color-card: oklch(0.129 0.042 264.695);
+  --color-card-foreground: oklch(0.984 0.003 247.858);
+
+  --color-popover: oklch(0.129 0.042 264.695);
+  --color-popover-foreground: oklch(0.984 0.003 247.858);
+
+  /* Stat visualization colors - dark mode variants */
+  --color-stat-teal: #2dd4bf;
+  --color-stat-green: #4ade80;
+  --color-stat-indigo: #818cf8;
+  --color-stat-cyan: #22d3ee;
+  --color-stat-violet: #a78bfa;
+  --color-stat-blue: #60a5fa;
+}
+
+/* Ensure all headings and text elements inherit color from parent or use foreground as fallback */
+body {
+  color: var(--color-foreground);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: inherit;
+}
+
+/* Custom utility classes for theme colors */
+.text-muted-foreground {
+  color: var(--color-muted-foreground);
+}

@@ -1,0 +1,1289 @@
+{
+  "timestamp": "2025-12-12T16:59:53.803Z",
+  "globalAverage": 434.15403642722987,
+  "countries": [
+    {
+      "code": "TKM",
+      "name": "Turkmenistan",
+      "intensity": 1306.3036,
+      "year": 2023
+    },
+    {
+      "code": "UZB",
+      "name": "Uzbekistan",
+      "intensity": 1121.1803,
+      "year": 2023
+    },
+    {
+      "code": "FLK",
+      "name": "Falkland Islands",
+      "intensity": 1000,
+      "year": 2022
+    },
+    {
+      "code": "MSR",
+      "name": "Montserrat",
+      "intensity": 1000,
+      "year": 2022
+    },
+    {
+      "code": "SHN",
+      "name": "Saint Helena",
+      "intensity": 1000,
+      "year": 2022
+    },
+    {
+      "code": "BHR",
+      "name": "Bahrain",
+      "intensity": 902.40533,
+      "year": 2023
+    },
+    {
+      "code": "BRN",
+      "name": "Brunei",
+      "intensity": 892.6654,
+      "year": 2023
+    },
+    {
+      "code": "BWA",
+      "name": "Botswana",
+      "intensity": 849.4209,
+      "year": 2023
+    },
+    {
+      "code": "LBY",
+      "name": "Libya",
+      "intensity": 830.5326,
+      "year": 2023
+    },
+    {
+      "code": "KAZ",
+      "name": "Kazakhstan",
+      "intensity": 801.9483,
+      "year": 2024
+    },
+    {
+      "code": "MNG",
+      "name": "Mongolia",
+      "intensity": 784.0096,
+      "year": 2024
+    },
+    {
+      "code": "NRU",
+      "name": "Nauru",
+      "intensity": 750,
+      "year": 2023
+    },
+    {
+      "code": "COG",
+      "name": "Congo",
+      "intensity": 713.7331,
+      "year": 2023
+    },
+    {
+      "code": "ZAF",
+      "name": "South Africa",
+      "intensity": 708.8762,
+      "year": 2024
+    },
+    {
+      "code": "IND",
+      "name": "India",
+      "intensity": 708.3216,
+      "year": 2024
+    },
+    {
+      "code": "SAU",
+      "name": "Saudi Arabia",
+      "intensity": 696.31335,
+      "year": 2023
+    },
+    {
+      "code": "BGD",
+      "name": "Bangladesh",
+      "intensity": 694.62494,
+      "year": 2024
+    },
+    {
+      "code": "IRQ",
+      "name": "Iraq",
+      "intensity": 689.4005,
+      "year": 2023
+    },
+    {
+      "code": "NER",
+      "name": "Niger",
+      "intensity": 687.5,
+      "year": 2023
+    },
+    {
+      "code": "IDN",
+      "name": "Indonesia",
+      "intensity": 682.4301,
+      "year": 2023
+    },
+    {
+      "code": "SYR",
+      "name": "Syria",
+      "intensity": 682.27094,
+      "year": 2022
+    },
+    {
+      "code": "TTO",
+      "name": "Trinidad and Tobago",
+      "intensity": 682.1053,
+      "year": 2023
+    },
+    {
+      "code": "HKG",
+      "name": "Hong Kong",
+      "intensity": 681.98724,
+      "year": 2023
+    },
+    {
+      "code": "SRB",
+      "name": "Serbia",
+      "intensity": 670.7974,
+      "year": 2024
+    },
+    {
+      "code": "TLS",
+      "name": "East Timor",
+      "intensity": 666.6667,
+      "year": 2023
+    },
+    {
+      "code": "GMB",
+      "name": "Gambia",
+      "intensity": 666.6667,
+      "year": 2023
+    },
+    {
+      "code": "GRD",
+      "name": "Grenada",
+      "intensity": 666.6667,
+      "year": 2022
+    },
+    {
+      "code": "ESH",
+      "name": "Western Sahara",
+      "intensity": 666.6666,
+      "year": 2009
+    },
+    {
+      "code": "PRI",
+      "name": "Puerto Rico",
+      "intensity": 664.5299,
+      "year": 2024
+    },
+    {
+      "code": "TCA",
+      "name": "Turks and Caicos Islands",
+      "intensity": 653.8462,
+      "year": 2023
+    },
+    {
+      "code": "BHS",
+      "name": "Bahamas",
+      "intensity": 653.65857,
+      "year": 2022
+    },
+    {
+      "code": "LCA",
+      "name": "Saint Lucia",
+      "intensity": 649.99994,
+      "year": 2022
+    },
+    {
+      "code": "ASM",
+      "name": "American Samoa",
+      "intensity": 647.05884,
+      "year": 2023
+    },
+    {
+      "code": "VGB",
+      "name": "British Virgin Islands",
+      "intensity": 647.05884,
+      "year": 2023
+    },
+    {
+      "code": "COM",
+      "name": "Comoros",
+      "intensity": 642.8572,
+      "year": 2023
+    },
+    {
+      "code": "CYM",
+      "name": "Cayman Islands",
+      "intensity": 642.8571,
+      "year": 2023
+    },
+    {
+      "code": "IRN",
+      "name": "Iran",
+      "intensity": 641.93616,
+      "year": 2024
+    },
+    {
+      "code": "VIR",
+      "name": "United States Virgin Islands",
+      "intensity": 641.791,
+      "year": 2023
+    },
+    {
+      "code": "BMU",
+      "name": "Bermuda",
+      "intensity": 640.625,
+      "year": 2023
+    },
+    {
+      "code": "CUB",
+      "name": "Cuba",
+      "intensity": 638.97974,
+      "year": 2023
+    },
+    {
+      "code": "BIH",
+      "name": "Bosnia and Herzegovina",
+      "intensity": 638.04486,
+      "year": 2024
+    },
+    {
+      "code": "KWT",
+      "name": "Kuwait",
+      "intensity": 637.23474,
+      "year": 2024
+    },
+    {
+      "code": "KNA",
+      "name": "Saint Kitts and Nevis",
+      "intensity": 636.36365,
+      "year": 2022
+    },
+    {
+      "code": "SLB",
+      "name": "Solomon Islands",
+      "intensity": 636.36365,
+      "year": 2023
+    },
+    {
+      "code": "TWN",
+      "name": "Taiwan",
+      "intensity": 635.65106,
+      "year": 2024
+    },
+    {
+      "code": "GUY",
+      "name": "Guyana",
+      "intensity": 634.32837,
+      "year": 2023
+    },
+    {
+      "code": "DZA",
+      "name": "Algeria",
+      "intensity": 633.64484,
+      "year": 2023
+    },
+    {
+      "code": "AZE",
+      "name": "Azerbaijan",
+      "intensity": 633.0714,
+      "year": 2024
+    },
+    {
+      "code": "MUS",
+      "name": "Mauritius",
+      "intensity": 633.0275,
+      "year": 2023
+    },
+    {
+      "code": "MDA",
+      "name": "Moldova",
+      "intensity": 629.55853,
+      "year": 2024
+    },
+    {
+      "code": "GNB",
+      "name": "Guinea-Bissau",
+      "intensity": 625,
+      "year": 2022
+    },
+    {
+      "code": "TCD",
+      "name": "Chad",
+      "intensity": 615.38464,
+      "year": 2022
+    },
+    {
+      "code": "POL",
+      "name": "Poland",
+      "intensity": 614.98236,
+      "year": 2024
+    },
+    {
+      "code": "PHL",
+      "name": "Philippines",
+      "intensity": 613.37994,
+      "year": 2024
+    },
+    {
+      "code": "MDV",
+      "name": "Maldives",
+      "intensity": 611.76465,
+      "year": 2023
+    },
+    {
+      "code": "GUM",
+      "name": "Guam",
+      "intensity": 611.11115,
+      "year": 2022
+    },
+    {
+      "code": "ATG",
+      "name": "Antigua and Barbuda",
+      "intensity": 611.1111,
+      "year": 2023
+    },
+    {
+      "code": "SSD",
+      "name": "South Sudan",
+      "intensity": 610.16956,
+      "year": 2023
+    },
+    {
+      "code": "GNQ",
+      "name": "Equatorial Guinea",
+      "intensity": 605.0955,
+      "year": 2023
+    },
+    {
+      "code": "MYS",
+      "name": "Malaysia",
+      "intensity": 604.4294,
+      "year": 2024
+    },
+    {
+      "code": "QAT",
+      "name": "Qatar",
+      "intensity": 602.8308,
+      "year": 2024
+    },
+    {
+      "code": "BRB",
+      "name": "Barbados",
+      "intensity": 600,
+      "year": 2023
+    },
+    {
+      "code": "DMA",
+      "name": "Dominica",
+      "intensity": 600,
+      "year": 2023
+    },
+    {
+      "code": "SPM",
+      "name": "Saint Pierre and Miquelon",
+      "intensity": 600,
+      "year": 2022
+    },
+    {
+      "code": "VCT",
+      "name": "Saint Vincent and the Grenadines",
+      "intensity": 600,
+      "year": 2023
+    },
+    {
+      "code": "ERI",
+      "name": "Eritrea",
+      "intensity": 590.90906,
+      "year": 2023
+    },
+    {
+      "code": "GIB",
+      "name": "Gibraltar",
+      "intensity": 590.90906,
+      "year": 2023
+    },
+    {
+      "code": "BEN",
+      "name": "Benin",
+      "intensity": 590,
+      "year": 2023
+    },
+    {
+      "code": "YEM",
+      "name": "Yemen",
+      "intensity": 586.3192,
+      "year": 2023
+    },
+    {
+      "code": "NCL",
+      "name": "New Caledonia",
+      "intensity": 585.7605,
+      "year": 2022
+    },
+    {
+      "code": "MAR",
+      "name": "Morocco",
+      "intensity": 577.6511,
+      "year": 2024
+    },
+    {
+      "code": "EGY",
+      "name": "Egypt",
+      "intensity": 571.9383,
+      "year": 2024
+    },
+    {
+      "code": "SYC",
+      "name": "Seychelles",
+      "intensity": 571.4286,
+      "year": 2023
+    },
+    {
+      "code": "TON",
+      "name": "Tonga",
+      "intensity": 571.4285,
+      "year": 2023
+    },
+    {
+      "code": "MMR",
+      "name": "Myanmar",
+      "intensity": 569.6921,
+      "year": 2024
+    },
+    {
+      "code": "MKD",
+      "name": "North Macedonia",
+      "intensity": 568.9655,
+      "year": 2024
+    },
+    {
+      "code": "ISR",
+      "name": "Israel",
+      "intensity": 567.26245,
+      "year": 2023
+    },
+    {
+      "code": "DOM",
+      "name": "Dominican Republic",
+      "intensity": 566.6918,
+      "year": 2024
+    },
+    {
+      "code": "JAM",
+      "name": "Jamaica",
+      "intensity": 561.24725,
+      "year": 2022
+    },
+    {
+      "code": "TUN",
+      "name": "Tunisia",
+      "intensity": 560.24963,
+      "year": 2024
+    },
+    {
+      "code": "CHN",
+      "name": "China",
+      "intensity": 559.5517,
+      "year": 2024
+    },
+    {
+      "code": "STP",
+      "name": "Sao Tome and Principe",
+      "intensity": 555.55554,
+      "year": 2022
+    },
+    {
+      "code": "BFA",
+      "name": "Burkina Faso",
+      "intensity": 554.91327,
+      "year": 2023
+    },
+    {
+      "code": "THA",
+      "name": "Thailand",
+      "intensity": 554.4976,
+      "year": 2024
+    },
+    {
+      "code": "AUS",
+      "name": "Australia",
+      "intensity": 551.58984,
+      "year": 2024
+    },
+    {
+      "code": "ABW",
+      "name": "Aruba",
+      "intensity": 550,
+      "year": 2022
+    },
+    {
+      "code": "OMN",
+      "name": "Oman",
+      "intensity": 545.32874,
+      "year": 2024
+    },
+    {
+      "code": "JOR",
+      "name": "Jordan",
+      "intensity": 539.21136,
+      "year": 2022
+    },
+    {
+      "code": "SEN",
+      "name": "Senegal",
+      "intensity": 535.4037,
+      "year": 2023
+    },
+    {
+      "code": "HTI",
+      "name": "Haiti",
+      "intensity": 534.6535,
+      "year": 2022
+    },
+    {
+      "code": "REU",
+      "name": "Reunion",
+      "intensity": 525.22253,
+      "year": 2022
+    },
+    {
+      "code": "SOM",
+      "name": "Somalia",
+      "intensity": 523.8095,
+      "year": 2023
+    },
+    {
+      "code": "MTQ",
+      "name": "Martinique",
+      "intensity": 516.7785,
+      "year": 2022
+    },
+    {
+      "code": "PNG",
+      "name": "Papua New Guinea",
+      "intensity": 513.74207,
+      "year": 2023
+    },
+    {
+      "code": "CYP",
+      "name": "Cyprus",
+      "intensity": 512.2378,
+      "year": 2024
+    },
+    {
+      "code": "LKA",
+      "name": "Sri Lanka",
+      "intensity": 509.78137,
+      "year": 2022
+    },
+    {
+      "code": "NGA",
+      "name": "Nigeria",
+      "intensity": 507.84946,
+      "year": 2024
+    },
+    {
+      "code": "KIR",
+      "name": "Kiribati",
+      "intensity": 500,
+      "year": 2022
+    },
+    {
+      "code": "VUT",
+      "name": "Vanuatu",
+      "intensity": 500,
+      "year": 2023
+    },
+    {
+      "code": "SGP",
+      "name": "Singapore",
+      "intensity": 498.74182,
+      "year": 2024
+    },
+    {
+      "code": "KHM",
+      "name": "Cambodia",
+      "intensity": 497.45547,
+      "year": 2024
+    },
+    {
+      "code": "GLP",
+      "name": "Guadeloupe",
+      "intensity": 493.90244,
+      "year": 2022
+    },
+    {
+      "code": "ARE",
+      "name": "United Arab Emirates",
+      "intensity": 492.69827,
+      "year": 2023
+    },
+    {
+      "code": "MEX",
+      "name": "Mexico",
+      "intensity": 484.83173,
+      "year": 2024
+    },
+    {
+      "code": "MLT",
+      "name": "Malta",
+      "intensity": 484.1629,
+      "year": 2024
+    },
+    {
+      "code": "JPN",
+      "name": "Japan",
+      "intensity": 482.32416,
+      "year": 2024
+    },
+    {
+      "code": "MRT",
+      "name": "Mauritania",
+      "intensity": 481.70734,
+      "year": 2022
+    },
+    {
+      "code": "CPV",
+      "name": "Cape Verde",
+      "intensity": 480,
+      "year": 2022
+    },
+    {
+      "code": "TGO",
+      "name": "Togo",
+      "intensity": 478.26086,
+      "year": 2023
+    },
+    {
+      "code": "MDG",
+      "name": "Madagascar",
+      "intensity": 477.2727,
+      "year": 2022
+    },
+    {
+      "code": "VNM",
+      "name": "Vietnam",
+      "intensity": 471.15857,
+      "year": 2024
+    },
+    {
+      "code": "TUR",
+      "name": "Turkey",
+      "intensity": 469.697,
+      "year": 2024
+    },
+    {
+      "code": "BOL",
+      "name": "Bolivia",
+      "intensity": 468.0162,
+      "year": 2024
+    },
+    {
+      "code": "PSE",
+      "name": "Palestine",
+      "intensity": 460.78433,
+      "year": 2022
+    },
+    {
+      "code": "GHA",
+      "name": "Ghana",
+      "intensity": 452.86124,
+      "year": 2023
+    },
+    {
+      "code": "DJI",
+      "name": "Djibouti",
+      "intensity": 450,
+      "year": 2023
+    },
+    {
+      "code": "RUS",
+      "name": "Russia",
+      "intensity": 449.19592,
+      "year": 2024
+    },
+    {
+      "code": "MAC",
+      "name": "Macao",
+      "intensity": 448.97958,
+      "year": 2022
+    },
+    {
+      "code": "PYF",
+      "name": "French Polynesia",
+      "intensity": 436.61972,
+      "year": 2022
+    },
+    {
+      "code": "LBR",
+      "name": "Liberia",
+      "intensity": 435.89746,
+      "year": 2023
+    },
+    {
+      "code": "GAB",
+      "name": "Gabon",
+      "intensity": 429.46707,
+      "year": 2023
+    },
+    {
+      "code": "KOR",
+      "name": "South Korea",
+      "intensity": 414.2726,
+      "year": 2024
+    },
+    {
+      "code": "CZE",
+      "name": "Czechia",
+      "intensity": 413.85922,
+      "year": 2024
+    },
+    {
+      "code": "MNE",
+      "name": "Montenegro",
+      "intensity": 413.5135,
+      "year": 2024
+    },
+    {
+      "code": "WSM",
+      "name": "Samoa",
+      "intensity": 399.99997,
+      "year": 2023
+    },
+    {
+      "code": "PAK",
+      "name": "Pakistan",
+      "intensity": 398.6102,
+      "year": 2024
+    },
+    {
+      "code": "MLI",
+      "name": "Mali",
+      "intensity": 394.49542,
+      "year": 2023
+    },
+    {
+      "code": "CIV",
+      "name": "Cote d'Ivoire",
+      "intensity": 393.531,
+      "year": 2023
+    },
+    {
+      "code": "USA",
+      "name": "United States",
+      "intensity": 383.5492,
+      "year": 2024
+    },
+    {
+      "code": "SUR",
+      "name": "Suriname",
+      "intensity": 383.17755,
+      "year": 2023
+    },
+    {
+      "code": "TZA",
+      "name": "Tanzania",
+      "intensity": 371.58472,
+      "year": 2023
+    },
+    {
+      "code": "LBN",
+      "name": "Lebanon",
+      "intensity": 369.46902,
+      "year": 2023
+    },
+    {
+      "code": "ARG",
+      "name": "Argentina",
+      "intensity": 358.94824,
+      "year": 2024
+    },
+    {
+      "code": "FRO",
+      "name": "Faroe Islands",
+      "intensity": 354.1667,
+      "year": 2022
+    },
+    {
+      "code": "PRK",
+      "name": "North Korea",
+      "intensity": 344.25613,
+      "year": 2022
+    },
+    {
+      "code": "DEU",
+      "name": "Germany",
+      "intensity": 344.13992,
+      "year": 2024
+    },
+    {
+      "code": "EST",
+      "name": "Estonia",
+      "intensity": 341.0214,
+      "year": 2024
+    },
+    {
+      "code": "GRC",
+      "name": "Greece",
+      "intensity": 319.76236,
+      "year": 2024
+    },
+    {
+      "code": "BLR",
+      "name": "Belarus",
+      "intensity": 313.6173,
+      "year": 2024
+    },
+    {
+      "code": "RWA",
+      "name": "Rwanda",
+      "intensity": 301.8868,
+      "year": 2023
+    },
+    {
+      "code": "ZWE",
+      "name": "Zimbabwe",
+      "intensity": 298.4356,
+      "year": 2023
+    },
+    {
+      "code": "HND",
+      "name": "Honduras",
+      "intensity": 289.49615,
+      "year": 2023
+    },
+    {
+      "code": "NIC",
+      "name": "Nicaragua",
+      "intensity": 288.32953,
+      "year": 2023
+    },
+    {
+      "code": "ITA",
+      "name": "Italy",
+      "intensity": 287.5335,
+      "year": 2024
+    },
+    {
+      "code": "COL",
+      "name": "Colombia",
+      "intensity": 285.7959,
+      "year": 2024
+    },
+    {
+      "code": "CMR",
+      "name": "Cameroon",
+      "intensity": 285.7143,
+      "year": 2023
+    },
+    {
+      "code": "IRL",
+      "name": "Ireland",
+      "intensity": 279.70218,
+      "year": 2024
+    },
+    {
+      "code": "FJI",
+      "name": "Fiji",
+      "intensity": 278.26086,
+      "year": 2023
+    },
+    {
+      "code": "GTM",
+      "name": "Guatemala",
+      "intensity": 272.65973,
+      "year": 2023
+    },
+    {
+      "code": "CHL",
+      "name": "Chile",
+      "intensity": 265.51648,
+      "year": 2024
+    },
+    {
+      "code": "BGR",
+      "name": "Bulgaria",
+      "intensity": 264.20685,
+      "year": 2024
+    },
+    {
+      "code": "PER",
+      "name": "Peru",
+      "intensity": 263.2733,
+      "year": 2024
+    },
+    {
+      "code": "PAN",
+      "name": "Panama",
+      "intensity": 258.74124,
+      "year": 2023
+    },
+    {
+      "code": "UKR",
+      "name": "Ukraine",
+      "intensity": 256.21008,
+      "year": 2022
+    },
+    {
+      "code": "NLD",
+      "name": "Netherlands",
+      "intensity": 253.31152,
+      "year": 2024
+    },
+    {
+      "code": "COK",
+      "name": "Cook Islands",
+      "intensity": 250,
+      "year": 2022
+    },
+    {
+      "code": "ROU",
+      "name": "Romania",
+      "intensity": 245.55428,
+      "year": 2024
+    },
+    {
+      "code": "ARM",
+      "name": "Armenia",
+      "intensity": 244.3439,
+      "year": 2024
+    },
+    {
+      "code": "LAO",
+      "name": "Laos",
+      "intensity": 232.12238,
+      "year": 2023
+    },
+    {
+      "code": "BDI",
+      "name": "Burundi",
+      "intensity": 230.76924,
+      "year": 2023
+    },
+    {
+      "code": "SVN",
+      "name": "Slovenia",
+      "intensity": 227.64705,
+      "year": 2024
+    },
+    {
+      "code": "SDN",
+      "name": "Sudan",
+      "intensity": 214.32835,
+      "year": 2023
+    },
+    {
+      "code": "GBR",
+      "name": "United Kingdom",
+      "intensity": 210.89114,
+      "year": 2024
+    },
+    {
+      "code": "ECU",
+      "name": "Ecuador",
+      "intensity": 209.69698,
+      "year": 2024
+    },
+    {
+      "code": "GUF",
+      "name": "French Guiana",
+      "intensity": 204.08163,
+      "year": 2022
+    },
+    {
+      "code": "HUN",
+      "name": "Hungary",
+      "intensity": 182.81822,
+      "year": 2024
+    },
+    {
+      "code": "GIN",
+      "name": "Guinea",
+      "intensity": 182.71605,
+      "year": 2023
+    },
+    {
+      "code": "VEN",
+      "name": "Venezuela",
+      "intensity": 180.25078,
+      "year": 2023
+    },
+    {
+      "code": "CAN",
+      "name": "Canada",
+      "intensity": 174.81425,
+      "year": 2024
+    },
+    {
+      "code": "HRV",
+      "name": "Croatia",
+      "intensity": 174.47917,
+      "year": 2024
+    },
+    {
+      "code": "AGO",
+      "name": "Angola",
+      "intensity": 167.22408,
+      "year": 2023
+    },
+    {
+      "code": "KGZ",
+      "name": "Kyrgyzstan",
+      "intensity": 163.70107,
+      "year": 2024
+    },
+    {
+      "code": "BLZ",
+      "name": "Belize",
+      "intensity": 155.55556,
+      "year": 2023
+    },
+    {
+      "code": "ESP",
+      "name": "Spain",
+      "intensity": 146.15356,
+      "year": 2024
+    },
+    {
+      "code": "DNK",
+      "name": "Denmark",
+      "intensity": 143.30042,
+      "year": 2024
+    },
+    {
+      "code": "GEO",
+      "name": "Georgia",
+      "intensity": 143.0575,
+      "year": 2024
+    },
+    {
+      "code": "SWZ",
+      "name": "Eswatini",
+      "intensity": 142.85713,
+      "year": 2023
+    },
+    {
+      "code": "LTU",
+      "name": "Lithuania",
+      "intensity": 139.34425,
+      "year": 2024
+    },
+    {
+      "code": "LVA",
+      "name": "Latvia",
+      "intensity": 136.22292,
+      "year": 2024
+    },
+    {
+      "code": "LUX",
+      "name": "Luxembourg",
+      "intensity": 134.61539,
+      "year": 2024
+    },
+    {
+      "code": "MOZ",
+      "name": "Mozambique",
+      "intensity": 127.81187,
+      "year": 2023
+    },
+    {
+      "code": "AFG",
+      "name": "Afghanistan",
+      "intensity": 123.711334,
+      "year": 2023
+    },
+    {
+      "code": "NZL",
+      "name": "New Zealand",
+      "intensity": 120.10797,
+      "year": 2024
+    },
+    {
+      "code": "BEL",
+      "name": "Belgium",
+      "intensity": 117.57641,
+      "year": 2024
+    },
+    {
+      "code": "TJK",
+      "name": "Tajikistan",
+      "intensity": 115.87792,
+      "year": 2024
+    },
+    {
+      "code": "PRT",
+      "name": "Portugal",
+      "intensity": 112.28676,
+      "year": 2024
+    },
+    {
+      "code": "GRL",
+      "name": "Greenland",
+      "intensity": 111.11111,
+      "year": 2022
+    },
+    {
+      "code": "ZMB",
+      "name": "Zambia",
+      "intensity": 110.996925,
+      "year": 2023
+    },
+    {
+      "code": "BRA",
+      "name": "Brazil",
+      "intensity": 103.212296,
+      "year": 2024
+    },
+    {
+      "code": "AUT",
+      "name": "Austria",
+      "intensity": 102.62287,
+      "year": 2024
+    },
+    {
+      "code": "SLV",
+      "name": "El Salvador",
+      "intensity": 101.56249,
+      "year": 2024
+    },
+    {
+      "code": "URY",
+      "name": "Uruguay",
+      "intensity": 96.69947,
+      "year": 2024
+    },
+    {
+      "code": "SVK",
+      "name": "Slovakia",
+      "intensity": 96.488235,
+      "year": 2024
+    },
+    {
+      "code": "KEN",
+      "name": "Kenya",
+      "intensity": 84.824905,
+      "year": 2024
+    },
+    {
+      "code": "FIN",
+      "name": "Finland",
+      "intensity": 72.2488,
+      "year": 2024
+    },
+    {
+      "code": "CRI",
+      "name": "Costa Rica",
+      "intensity": 63.004845,
+      "year": 2024
+    },
+    {
+      "code": "UGA",
+      "name": "Uganda",
+      "intensity": 57.391308,
+      "year": 2022
+    },
+    {
+      "code": "MWI",
+      "name": "Malawi",
+      "intensity": 54.64481,
+      "year": 2022
+    },
+    {
+      "code": "NAM",
+      "name": "Namibia",
+      "intensity": 47.61905,
+      "year": 2023
+    },
+    {
+      "code": "SLE",
+      "name": "Sierra Leone",
+      "intensity": 47.61905,
+      "year": 2023
+    },
+    {
+      "code": "FRA",
+      "name": "France",
+      "intensity": 44.179085,
+      "year": 2024
+    },
+    {
+      "code": "CHE",
+      "name": "Switzerland",
+      "intensity": 36.599316,
+      "year": 2024
+    },
+    {
+      "code": "SWE",
+      "name": "Sweden",
+      "intensity": 35.823833,
+      "year": 2024
+    },
+    {
+      "code": "NOR",
+      "name": "Norway",
+      "intensity": 30.745583,
+      "year": 2024
+    },
+    {
+      "code": "ISL",
+      "name": "Iceland",
+      "intensity": 28.330019,
+      "year": 2023
+    },
+    {
+      "code": "COD",
+      "name": "Democratic Republic of Congo",
+      "intensity": 27.044025,
+      "year": 2023
+    },
+    {
+      "code": "PRY",
+      "name": "Paraguay",
+      "intensity": 24.864376,
+      "year": 2023
+    },
+    {
+      "code": "ALB",
+      "name": "Albania",
+      "intensity": 24.417313,
+      "year": 2023
+    },
+    {
+      "code": "BTN",
+      "name": "Bhutan",
+      "intensity": 24.19355,
+      "year": 2023
+    },
+    {
+      "code": "ETH",
+      "name": "Ethiopia",
+      "intensity": 23.54874,
+      "year": 2023
+    },
+    {
+      "code": "NPL",
+      "name": "Nepal",
+      "intensity": 23.364487,
+      "year": 2022
+    },
+    {
+      "code": "LSO",
+      "name": "Lesotho",
+      "intensity": 20.833334,
+      "year": 2022
+    },
+    {
+      "code": "CAF",
+      "name": "Central African Republic",
+      "intensity": 0,
+      "year": 2022
+    }
+  ],
+  "metadata": {
+    "unit": "gCO₂",
+    "description": "[Greenhouse gases](#dod:ghgemissions) emitted per unit of generated electricity, measured in grams of [CO₂ equivalents](#dod:carbondioxideequivalents) per [kilowatt-hour](#dod:watt-hours).",
+    "source": "Ember"
+  }
+}
