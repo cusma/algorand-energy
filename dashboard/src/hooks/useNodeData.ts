@@ -8,7 +8,7 @@ import { nodeDataSchema, type NodeData } from '../schemas/data';
  * @internal
  */
 const fetchNodeData = async (): Promise<NodeData> => {
-  const response = await fetch('/data/latest/nodes.json');
+  const response = await fetch(`${import.meta.env.BASE_URL}data/latest/nodes.json`);
   if (!response.ok) {
     throw new Error('Failed to fetch node data');
   }

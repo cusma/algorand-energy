@@ -1,4 +1,4 @@
-import { Network, Shield, Radio, Database } from 'lucide-react';
+import { Network, Shield, Radio, Database, AlertCircle } from 'lucide-react';
 import { ReactNode } from 'react';
 
 import { useNodeData } from '../hooks/useNodeData';
@@ -47,10 +47,15 @@ export const ValidatorStats = () => {
   if (error || !data) {
     return (
       <div className="bg-card border-destructive/30 shadow-card rounded-lg border p-5">
-        <p className="text-destructive font-semibold">Failed to load node data</p>
-        <p className="text-muted-foreground mt-1 text-sm">
-          Please check your connection and try again
-        </p>
+        <div className="flex items-center gap-3">
+          <AlertCircle className="text-destructive" size={24} />
+          <div>
+            <p className="text-destructive font-semibold">Failed to load node data</p>
+            <p className="text-muted-foreground mt-1 text-sm">
+              Please check your connection and try again
+            </p>
+          </div>
+        </div>
       </div>
     );
   }

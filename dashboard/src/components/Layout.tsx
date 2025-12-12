@@ -16,12 +16,12 @@ export const Layout = ({ children }: LayoutProps) => {
               <div className="flex items-center gap-2">
                 <div className="h-8">
                   <img
-                    src="/logos/algorand-logo-light.svg"
+                    src={`${import.meta.env.BASE_URL}logos/algorand-logo-light.svg`}
                     alt="Algorand"
                     className="hidden h-full dark:block"
                   />
                   <img
-                    src="/logos/algorand-logo-dark.svg"
+                    src={`${import.meta.env.BASE_URL}logos/algorand-logo-dark.svg`}
                     alt="Algorand"
                     className="h-full dark:hidden"
                   />

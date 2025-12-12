@@ -8,7 +8,7 @@ import { geographicalDataSchema, type GeographicalData } from '../schemas/data';
  * @internal
  */
 const fetchGeographicalData = async (): Promise<GeographicalData> => {
-  const response = await fetch('/data/latest/geographical.json');
+  const response = await fetch(`${import.meta.env.BASE_URL}data/latest/geographical.json`);
   if (!response.ok) {
     throw new Error('Failed to fetch geographical data');
   }
