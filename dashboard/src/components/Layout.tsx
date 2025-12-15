@@ -49,7 +49,7 @@ export const Layout = ({ children }: LayoutProps) => {
             top: 'calc(-50% + 4.5rem)',
           }}
         >
-          {Array.from({ length: 12 }).map((_, index) => (
+          {Array.from({ length: 24 }).map((_, index) => (
             <div
               key={`light-row-${index}`}
               style={{
@@ -77,7 +77,7 @@ export const Layout = ({ children }: LayoutProps) => {
             top: 'calc(-50% + 4.5rem)',
           }}
         >
-          {Array.from({ length: 12 }).map((_, index) => (
+          {Array.from({ length: 24 }).map((_, index) => (
             <div
               key={`dark-row-${index}`}
               style={{
