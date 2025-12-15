@@ -1,9 +1,9 @@
 {
-  "timestamp": "2025-12-15T11:10:51.543Z",
+  "timestamp": "2025-12-15T14:16:09.918Z",
   "nodesByCountry": [
     {
       "countryCode": "US",
-      "nodeCount": 1253
+      "nodeCount": 1251
     },
     {
       "countryCode": "DE",
@@ -11,7 +11,7 @@
     },
     {
       "countryCode": "PK",
-      "nodeCount": 167
+      "nodeCount": 176
     },
     {
       "countryCode": "IE",
@@ -19,7 +19,7 @@
     },
     {
       "countryCode": "FR",
-      "nodeCount": 133
+      "nodeCount": 134
     },
     {
       "countryCode": "GB",
@@ -71,11 +71,11 @@
     },
     {
       "countryCode": "AE",
-      "nodeCount": 27
+      "nodeCount": 28
     },
     {
       "countryCode": "ES",
-      "nodeCount": 25
+      "nodeCount": 26
     },
     {
       "countryCode": "SA",
@@ -83,7 +83,7 @@
     },
     {
       "countryCode": "HK",
-      "nodeCount": 19
+      "nodeCount": 20
     },
     {
       "countryCode": "BE",
@@ -94,16 +94,16 @@
       "nodeCount": 16
     },
     {
-      "countryCode": "SE",
-      "nodeCount": 15
-    },
-    {
       "countryCode": "KR",
       "nodeCount": 14
     },
     {
+      "countryCode": "SE",
+      "nodeCount": 14
+    },
+    {
       "countryCode": "BD",
-      "nodeCount": 13
+      "nodeCount": 14
     },
     {
       "countryCode": "PT",
@@ -174,6 +174,10 @@
       "nodeCount": 4
     },
     {
+      "countryCode": "OM",
+      "nodeCount": 4
+    },
+    {
       "countryCode": "NG",
       "nodeCount": 4
     },
@@ -188,10 +192,6 @@
     {
       "countryCode": "TH",
       "nodeCount": 4
-    },
-    {
-      "countryCode": "OM",
-      "nodeCount": 3
     },
     {
       "countryCode": "LV",
