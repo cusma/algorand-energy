@@ -3,7 +3,7 @@ import { Zap, AlertCircle, Leaf } from 'lucide-react';
 import { StatCard } from './ui';
 import { useCountryEmissions } from '../hooks/useCountryEmissions';
 import { useNodeData } from '../hooks/useNodeData';
-import { formatNumber, formatEnergy, scaleEnergy } from '../lib/utils';
+import { formatNumber } from '../lib/utils';
 
 /**
  * Average power consumption per Algorand node in watts.
@@ -194,34 +194,30 @@ export const NetworkPowerStats = () => {
   ];
 
   // Energy consumption cards
-  const scaledNodeEnergy = scaleEnergy(nodeEnergyKWh);
-  const scaledMainnetEnergy = scaleEnergy(mainnetEnergyKWh);
-  const scaledValidatorEnergy = scaleEnergy(validatorEnergyKWh);
-
   const energyConsumptionCards = [
     {
       label: 'Annualized Node Energy',
-      value: formatEnergy(nodeEnergyKWh),
-      rawValue: scaledNodeEnergy.value,
-      suffix: scaledNodeEnergy.suffix,
+      value: `${formatNumber(nodeEnergyKWh, 2)} kWh`,
+      rawValue: nodeEnergyKWh,
+      suffix: ' kWh',
       decimals: 2,
       icon: <Zap size={24} strokeWidth={2} />,
       colorClass: 'text-stat-blue',
     },
     {
       label: 'Annualized Mainnet Energy',
-      value: formatEnergy(mainnetEnergyKWh),
-      rawValue: scaledMainnetEnergy.value,
-      suffix: scaledMainnetEnergy.suffix,
+      value: `${formatNumber(mainnetEnergyKWh, 2)} kWh`,
+      rawValue: mainnetEnergyKWh,
+      suffix: ' kWh',
       decimals: 2,
       icon: <Zap size={24} strokeWidth={2} />,
       colorClass: 'text-stat-green',
     },
     {
       label: 'Annualized Validation Energy',
-      value: formatEnergy(validatorEnergyKWh),
-      rawValue: scaledValidatorEnergy.value,
-      suffix: scaledValidatorEnergy.suffix,
+      value: `${formatNumber(validatorEnergyKWh, 2)} kWh`,
+      rawValue: validatorEnergyKWh,
+      suffix: ' kWh',
       decimals: 2,
       icon: <Zap size={24} strokeWidth={2} />,
       colorClass: 'text-stat-teal',
@@ -230,6 +226,15 @@ export const NetworkPowerStats = () => {
 
   // Emissions cards
   const emissionsCards = [
+    {
+      label: 'Weighted Avg. Emissions Intensity',
+      value: `${formatNumber(weightedAvgEmissionsIntensity, 2)} kgCO₂e/kWh`,
+      rawValue: weightedAvgEmissionsIntensity,
+      suffix: ' kgCO₂e/kWh',
+      decimals: 2,
+      icon: <Zap size={24} strokeWidth={2} />,
+      colorClass: 'text-stat-blue',
+    },
     {
       label: 'Annualized MainNet GHG Emissions',
       value: `${formatNumber(annualizedMainnetGHGEmissions, 2)} tCO₂e/y`,
