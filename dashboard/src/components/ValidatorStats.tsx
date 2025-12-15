@@ -3,6 +3,8 @@ import { Network, Shield, Radio, Database, AlertCircle } from 'lucide-react';
 import { StatCard } from './ui';
 import { useNodeData } from '../hooks/useNodeData';
 import { formatNumber } from '../lib/utils';
+import { Alert, AlertDescription, AlertTitle } from './ui/alert';
+import { Skeleton } from './ui/skeleton';
 
 export const ValidatorStats = () => {
   const { data, isLoading, error } = useNodeData();
@@ -11,10 +13,14 @@ export const ValidatorStats = () => {
     return (
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
         {[...Array(4)].map((_, i) => (
-          <div key={i} className="bg-card border-border animate-pulse rounded-lg border p-5">
-            <div className="bg-muted mb-3 h-10 w-10 rounded-lg"></div>
-            <div className="bg-muted mb-3 h-3 w-3/4 rounded"></div>
-            <div className="bg-muted h-10 w-2/3 rounded"></div>
+          <div key={i} className="bg-card border-border rounded-lg border p-5">
+            <div className="flex items-start gap-3">
+              <Skeleton className="mt-0.5 h-6 w-6 shrink-0 rounded" />
+              <div className="flex-1">
+                <Skeleton className="mb-2 h-3 w-24" />
+                <Skeleton className="h-9 w-20" />
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -23,17 +29,11 @@ export const ValidatorStats = () => {
 
   if (error || !data) {
     return (
-      <div className="bg-card border-destructive/30 shadow-card rounded-lg border p-5">
-        <div className="flex items-center gap-3">
-          <AlertCircle className="text-destructive" size={24} />
-          <div>
-            <p className="text-destructive font-semibold">Failed to load node data</p>
-            <p className="text-muted-foreground mt-1 text-sm">
-              Please check your connection and try again
-            </p>
-          </div>
-        </div>
-      </div>
+      <Alert variant="destructive">
+        <AlertCircle className="h-4 w-4" />
+        <AlertTitle>Failed to load node data</AlertTitle>
+        <AlertDescription>Please check your connection and try again</AlertDescription>
+      </Alert>
     );
   }
 
@@ -53,6 +53,7 @@ export const ValidatorStats = () => {
       decimals: 0,
       colorClass: 'text-stat-teal',
       icon: <Shield size={24} strokeWidth={2} />,
+      infoContent: 'Assuming 1 Node per Validator Account (worst case scenario)',
     },
     {
       label: 'Relay Nodes',
@@ -87,6 +88,7 @@ export const ValidatorStats = () => {
             decimals={stat.decimals}
             icon={stat.icon}
             colorClass={stat.colorClass}
+            infoContent={stat.infoContent}
           />
         ))}
       </div>

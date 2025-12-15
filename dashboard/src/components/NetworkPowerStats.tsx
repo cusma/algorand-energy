@@ -1,4 +1,4 @@
-import { Zap, AlertCircle, Leaf } from 'lucide-react';
+import { Zap, AlertCircle, Leaf, Battery } from 'lucide-react';
 
 import { StatCard } from './ui';
 import { useCountryEmissions } from '../hooks/useCountryEmissions';
@@ -172,6 +172,19 @@ export const NetworkPowerStats = () => {
       decimals: 0,
       icon: <Zap size={24} strokeWidth={2} />,
       colorClass: 'text-stat-blue',
+      infoContent: (
+        <>
+          Average node power estimate based on{' '}
+          <a
+            href="https://26119259.fs1.hubspotusercontent-eu1.net/hubfs/26119259/Website-2024/PDFs/Proof%20of%20Stake%20Blockchain%20Efficiency%20Framework.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-stat-blue underline"
+          >
+            Proof of Stake Blockchain Efficiency Framework (PDF)
+          </a>
+        </>
+      ),
     },
     {
       label: 'Average Mainnet Power',
@@ -190,6 +203,7 @@ export const NetworkPowerStats = () => {
       decimals: 2,
       icon: <Zap size={24} strokeWidth={2} />,
       colorClass: 'text-stat-teal',
+      infoContent: undefined,
     },
   ];
 
@@ -201,8 +215,9 @@ export const NetworkPowerStats = () => {
       rawValue: nodeEnergyKWh,
       suffix: ' kWh',
       decimals: 2,
-      icon: <Zap size={24} strokeWidth={2} />,
+      icon: <Battery size={24} strokeWidth={2} />,
       colorClass: 'text-stat-blue',
+      infoContent: undefined,
     },
     {
       label: 'Annualized Mainnet Energy',
@@ -210,8 +225,9 @@ export const NetworkPowerStats = () => {
       rawValue: mainnetEnergyKWh,
       suffix: ' kWh',
       decimals: 2,
-      icon: <Zap size={24} strokeWidth={2} />,
+      icon: <Battery size={24} strokeWidth={2} />,
       colorClass: 'text-stat-green',
+      infoContent: undefined,
     },
     {
       label: 'Annualized Validation Energy',
@@ -219,8 +235,9 @@ export const NetworkPowerStats = () => {
       rawValue: validatorEnergyKWh,
       suffix: ' kWh',
       decimals: 2,
-      icon: <Zap size={24} strokeWidth={2} />,
+      icon: <Battery size={24} strokeWidth={2} />,
       colorClass: 'text-stat-teal',
+      infoContent: undefined,
     },
   ];
 
@@ -232,8 +249,9 @@ export const NetworkPowerStats = () => {
       rawValue: weightedAvgEmissionsIntensity,
       suffix: ' kgCO₂e/kWh',
       decimals: 2,
-      icon: <Zap size={24} strokeWidth={2} />,
+      icon: <Leaf size={24} strokeWidth={2} />,
       colorClass: 'text-stat-blue',
+      infoContent: undefined,
     },
     {
       label: 'Annualized MainNet GHG Emissions',
@@ -243,6 +261,7 @@ export const NetworkPowerStats = () => {
       decimals: 2,
       icon: <Leaf size={24} strokeWidth={2} />,
       colorClass: 'text-stat-green',
+      infoContent: undefined,
     },
     {
       label: 'Annualized Validation GHG Emissions',
@@ -252,28 +271,16 @@ export const NetworkPowerStats = () => {
       decimals: 2,
       icon: <Leaf size={24} strokeWidth={2} />,
       colorClass: 'text-stat-teal',
+      infoContent: undefined,
     },
   ];
 
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-muted-foreground mb-1 text-xs font-semibold tracking-wide uppercase">
+        <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
           Instantaneous Power Consumption
         </h3>
-        <div className="text-muted-foreground mb-3 text-xs">
-          <p>
-            Average node power estimate based on{' '}
-            <a
-              href="https://26119259.fs1.hubspotusercontent-eu1.net/hubfs/26119259/Website-2024/PDFs/Proof%20of%20Stake%20Blockchain%20Efficiency%20Framework.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-foreground underline transition-colors"
-            >
-              Proof of Stake Blockchain Efficiency Framework (PDF)
-            </a>
-          </p>
-        </div>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {powerConsumptionCards.map((card) => (
             <StatCard
@@ -285,6 +292,7 @@ export const NetworkPowerStats = () => {
               decimals={card.decimals}
               icon={card.icon}
               colorClass={card.colorClass}
+              infoContent={card.infoContent}
             />
           ))}
         </div>
@@ -306,6 +314,7 @@ export const NetworkPowerStats = () => {
               decimals={card.decimals}
               icon={card.icon}
               colorClass={card.colorClass}
+              infoContent={card.infoContent}
             />
           ))}
         </div>
@@ -327,6 +336,7 @@ export const NetworkPowerStats = () => {
               decimals={card.decimals}
               icon={card.icon}
               colorClass={card.colorClass}
+              infoContent={card.infoContent}
             />
           ))}
         </div>

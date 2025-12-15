@@ -1,5 +1,7 @@
+import { Info } from 'lucide-react';
 import { ReactNode } from 'react';
 
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip';
 import { useCountUp } from '../../hooks/useCountUp';
 import { formatNumber } from '../../lib/utils';
 
@@ -25,6 +27,10 @@ export interface StatCardProps {
   decimals?: number;
   /** Optional animation duration in milliseconds (default: 2000) */
   animationDuration?: number;
+  /** Optional info popover content */
+  infoContent?: ReactNode;
+  /** Optional info popover title */
+  infoTitle?: string;
 }
 
 /**
@@ -75,6 +81,8 @@ export const StatCard = ({
   suffix = '',
   decimals = 2,
   animationDuration = 2000,
+  infoContent,
+  infoTitle,
 }: StatCardProps) => {
   // Use animated counter if rawValue is provided
   const animatedValue = useCountUp(rawValue || 0, animationDuration);
@@ -84,7 +92,28 @@ export const StatCard = ({
     rawValue !== undefined ? formatNumber(animatedValue, decimals) + suffix : value;
 
   return (
-    <div className="bg-card border-border shadow-card rounded-lg border p-5">
+    <div className="bg-card border-border shadow-card relative rounded-lg border p-5">
+      {/* Info icon in top-right corner */}
+      {infoContent && (
+        <TooltipProvider delayDuration={200}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                className="text-muted-foreground hover:text-foreground absolute top-3 right-3 transition-colors"
+                aria-label="More information"
+              >
+                <Info size={16} />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent className="max-w-80" align="end" side="top" sideOffset={8}>
+              {infoTitle && <h4 className="mb-2 text-sm font-semibold">{infoTitle}</h4>}
+              <div className="text-xs">{infoContent}</div>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
+
+      {/* Existing flex layout unchanged */}
       <div className="flex items-start gap-3">
         <div className={`mt-0.5 shrink-0 ${colorClass}`}>{icon}</div>
         <div className="flex-1">

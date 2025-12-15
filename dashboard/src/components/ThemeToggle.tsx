@@ -1,6 +1,8 @@
 import { Monitor, Moon, Sun } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
+import { Button } from './ui/button';
+
 type Theme = 'system' | 'light' | 'dark';
 
 export const ThemeToggle = () => {
@@ -68,12 +70,8 @@ export const ThemeToggle = () => {
   };
 
   return (
-    <button
-      onClick={toggleTheme}
-      className="border-border bg-card hover:bg-muted rounded-lg border p-2 transition-colors"
-      aria-label={getAriaLabel()}
-    >
+    <Button onClick={toggleTheme} variant="outline" size="icon" aria-label={getAriaLabel()}>
       {getIcon()}
-    </button>
+    </Button>
   );
 };
