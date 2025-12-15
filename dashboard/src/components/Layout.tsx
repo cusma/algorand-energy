@@ -14,7 +14,7 @@ export const Layout = ({ children }: LayoutProps) => {
           <div className="flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2">
-                <div className="h-8">
+                <div className="h-6 sm:h-8">
                   <img
                     src={`${import.meta.env.BASE_URL}logos/algorand-logo-light.svg`}
                     alt="Algorand"
@@ -26,9 +26,9 @@ export const Layout = ({ children }: LayoutProps) => {
                     className="h-full dark:hidden"
                   />
                 </div>
-                <h1 className="text-foreground text-2xl font-bold">Energy Dashboard</h1>
+                <h1 className="text-foreground text-lg font-bold sm:text-2xl">Energy Dashboard</h1>
               </div>
-              <p className="text-muted-foreground mt-2 text-xs">
+              <p className="text-muted-foreground mt-1 text-xs sm:mt-2">
                 Network statistics and environmental impact metrics
               </p>
             </div>
