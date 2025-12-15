@@ -22,6 +22,36 @@ export function formatNumber(num: number, decimals: number = 2): string {
 }
 
 /**
+ * Scaled energy value with appropriate unit
+ */
+export interface ScaledEnergy {
+  value: number;
+  suffix: string;
+}
+
+/**
+ * Scales energy value and returns numeric value with appropriate unit suffix
+ * Useful for animated counters that need separate value and unit
+ *
+ * @param kWh - Energy value in kilowatt-hours
+ * @returns Object with scaled numeric value and unit suffix
+ *
+ * @example
+ * scaleEnergy(500)      // Returns: { value: 500, suffix: ' kWh' }
+ * scaleEnergy(1500)     // Returns: { value: 1.5, suffix: ' MWh' }
+ * scaleEnergy(2500000)  // Returns: { value: 2.5, suffix: ' GWh' }
+ */
+export function scaleEnergy(kWh: number): ScaledEnergy {
+  if (kWh < 1000) {
+    return { value: kWh, suffix: ' kWh' };
+  } else if (kWh < 1000000) {
+    return { value: kWh / 1000, suffix: ' MWh' };
+  } else {
+    return { value: kWh / 1000000, suffix: ' GWh' };
+  }
+}
+
+/**
  * Formats energy values with automatic unit scaling
  * Scales from kWh -> MWh -> GWh based on value magnitude
  * @param kWh - Energy value in kilowatt-hours
@@ -34,18 +64,8 @@ export function formatNumber(num: number, decimals: number = 2): string {
  * formatEnergy(2500000, 2)  // Returns: "2.50 GWh"
  */
 export function formatEnergy(kWh: number, decimals: number = 2): string {
-  if (kWh < 1000) {
-    // Use kWh for values less than 1,000
-    return `${formatNumber(kWh, decimals)} kWh`;
-  } else if (kWh < 1000000) {
-    // Use MWh for values between 1,000 and 999,999
-    const mWh = kWh / 1000;
-    return `${formatNumber(mWh, decimals)} MWh`;
-  } else {
-    // Use GWh for values 1,000,000+
-    const gWh = kWh / 1000000;
-    return `${formatNumber(gWh, decimals)} GWh`;
-  }
+  const scaled = scaleEnergy(kWh);
+  return `${formatNumber(scaled.value, decimals)}${scaled.suffix}`;
 }
 
 /**

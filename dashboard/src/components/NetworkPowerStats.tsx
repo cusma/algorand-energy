@@ -1,8 +1,9 @@
 import { Zap, AlertCircle, Leaf } from 'lucide-react';
 
+import { StatCard } from './ui';
 import { useCountryEmissions } from '../hooks/useCountryEmissions';
 import { useNodeData } from '../hooks/useNodeData';
-import { formatNumber, formatEnergy } from '../lib/utils';
+import { formatNumber, formatEnergy, scaleEnergy } from '../lib/utils';
 
 /**
  * Average power consumption per Algorand node in watts.
@@ -161,6 +162,94 @@ export const NetworkPowerStats = () => {
   const annualizedValidationGHGEmissions =
     (validatorEnergyEmissions + validatorStorageEmissions) / 1000;
 
+  // Power consumption cards
+  const powerConsumptionCards = [
+    {
+      label: 'Average Node Power',
+      value: `${AVERAGE_NODE_POWER_W} W`,
+      rawValue: AVERAGE_NODE_POWER_W,
+      suffix: ' W',
+      decimals: 0,
+      icon: <Zap size={24} strokeWidth={2} />,
+      colorClass: 'text-stat-blue',
+    },
+    {
+      label: 'Average Mainnet Power',
+      value: `${formatNumber(mainnetPowerKW, 2)} kW`,
+      rawValue: mainnetPowerKW,
+      suffix: ' kW',
+      decimals: 2,
+      icon: <Zap size={24} strokeWidth={2} />,
+      colorClass: 'text-stat-green',
+    },
+    {
+      label: 'Average Validation Power',
+      value: `${formatNumber(validatorPowerKW, 2)} kW`,
+      rawValue: validatorPowerKW,
+      suffix: ' kW',
+      decimals: 2,
+      icon: <Zap size={24} strokeWidth={2} />,
+      colorClass: 'text-stat-teal',
+    },
+  ];
+
+  // Energy consumption cards
+  const scaledNodeEnergy = scaleEnergy(nodeEnergyKWh);
+  const scaledMainnetEnergy = scaleEnergy(mainnetEnergyKWh);
+  const scaledValidatorEnergy = scaleEnergy(validatorEnergyKWh);
+
+  const energyConsumptionCards = [
+    {
+      label: 'Annualized Node Energy',
+      value: formatEnergy(nodeEnergyKWh),
+      rawValue: scaledNodeEnergy.value,
+      suffix: scaledNodeEnergy.suffix,
+      decimals: 2,
+      icon: <Zap size={24} strokeWidth={2} />,
+      colorClass: 'text-stat-blue',
+    },
+    {
+      label: 'Annualized Mainnet Energy',
+      value: formatEnergy(mainnetEnergyKWh),
+      rawValue: scaledMainnetEnergy.value,
+      suffix: scaledMainnetEnergy.suffix,
+      decimals: 2,
+      icon: <Zap size={24} strokeWidth={2} />,
+      colorClass: 'text-stat-green',
+    },
+    {
+      label: 'Annualized Validation Energy',
+      value: formatEnergy(validatorEnergyKWh),
+      rawValue: scaledValidatorEnergy.value,
+      suffix: scaledValidatorEnergy.suffix,
+      decimals: 2,
+      icon: <Zap size={24} strokeWidth={2} />,
+      colorClass: 'text-stat-teal',
+    },
+  ];
+
+  // Emissions cards
+  const emissionsCards = [
+    {
+      label: 'Annualized MainNet GHG Emissions',
+      value: `${formatNumber(annualizedMainnetGHGEmissions, 2)} tCO₂e/y`,
+      rawValue: annualizedMainnetGHGEmissions,
+      suffix: ' tCO₂e/y',
+      decimals: 2,
+      icon: <Leaf size={24} strokeWidth={2} />,
+      colorClass: 'text-stat-green',
+    },
+    {
+      label: 'Annualized Validation GHG Emissions',
+      value: `${formatNumber(annualizedValidationGHGEmissions, 2)} tCO₂e/y`,
+      rawValue: annualizedValidationGHGEmissions,
+      suffix: ' tCO₂e/y',
+      decimals: 2,
+      icon: <Leaf size={24} strokeWidth={2} />,
+      colorClass: 'text-stat-teal',
+    },
+  ];
+
   return (
     <div className="space-y-6">
       <div>
@@ -181,50 +270,18 @@ export const NetworkPowerStats = () => {
           </p>
         </div>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {/* Average Node Power */}
-          <div className="bg-card border-border shadow-card rounded-lg border p-5">
-            <div className="flex items-start gap-3">
-              <Zap className="text-stat-blue mt-0.5 shrink-0" size={24} />
-              <div className="flex-1">
-                <p className="text-muted-foreground mb-2 text-xs font-medium tracking-wide uppercase">
-                  Average Node Power
-                </p>
-                <p className="text-stat-blue font-mono text-3xl font-bold">
-                  {AVERAGE_NODE_POWER_W} W
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Average Mainnet Power */}
-          <div className="bg-card border-border shadow-card rounded-lg border p-5">
-            <div className="flex items-start gap-3">
-              <Zap className="text-stat-green mt-0.5 shrink-0" size={24} />
-              <div className="flex-1">
-                <p className="text-muted-foreground mb-2 text-xs font-medium tracking-wide uppercase">
-                  Average Mainnet Power
-                </p>
-                <p className="text-stat-green font-mono text-3xl font-bold">
-                  {formatNumber(mainnetPowerKW, 2)} kW
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Average Validation Power */}
-          <div className="bg-card border-border shadow-card rounded-lg border p-5">
-            <div className="flex items-start gap-3">
-              <Zap className="text-stat-teal mt-0.5 shrink-0" size={24} />
-              <div className="flex-1">
-                <p className="text-muted-foreground mb-2 text-xs font-medium tracking-wide uppercase">
-                  Average Validation Power
-                </p>
-                <p className="text-stat-teal font-mono text-3xl font-bold">
-                  {formatNumber(validatorPowerKW, 2)} kW
-                </p>
-              </div>
-            </div>
-          </div>
+          {powerConsumptionCards.map((card) => (
+            <StatCard
+              key={card.label}
+              label={card.label}
+              value={card.value}
+              rawValue={card.rawValue}
+              suffix={card.suffix}
+              decimals={card.decimals}
+              icon={card.icon}
+              colorClass={card.colorClass}
+            />
+          ))}
         </div>
       </div>
 
@@ -234,50 +291,18 @@ export const NetworkPowerStats = () => {
           Annualized Energy Consumption
         </h3>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {/* Annualized Node Energy */}
-          <div className="bg-card border-border shadow-card rounded-lg border p-5">
-            <div className="flex items-start gap-3">
-              <Zap className="text-stat-blue mt-0.5 shrink-0" size={24} />
-              <div className="flex-1">
-                <p className="text-muted-foreground mb-2 text-xs font-medium tracking-wide uppercase">
-                  Annualized Node Energy
-                </p>
-                <p className="text-stat-blue font-mono text-3xl font-bold">
-                  {formatEnergy(nodeEnergyKWh)}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Annualized Mainnet Energy */}
-          <div className="bg-card border-border shadow-card rounded-lg border p-5">
-            <div className="flex items-start gap-3">
-              <Zap className="text-stat-green mt-0.5 shrink-0" size={24} />
-              <div className="flex-1">
-                <p className="text-muted-foreground mb-2 text-xs font-medium tracking-wide uppercase">
-                  Annualized Mainnet Energy
-                </p>
-                <p className="text-stat-green font-mono text-3xl font-bold">
-                  {formatEnergy(mainnetEnergyKWh)}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Annualized Validation Energy */}
-          <div className="bg-card border-border shadow-card rounded-lg border p-5">
-            <div className="flex items-start gap-3">
-              <Zap className="text-stat-teal mt-0.5 shrink-0" size={24} />
-              <div className="flex-1">
-                <p className="text-muted-foreground mb-2 text-xs font-medium tracking-wide uppercase">
-                  Annualized Validation Energy
-                </p>
-                <p className="text-stat-teal font-mono text-3xl font-bold">
-                  {formatEnergy(validatorEnergyKWh)}
-                </p>
-              </div>
-            </div>
-          </div>
+          {energyConsumptionCards.map((card) => (
+            <StatCard
+              key={card.label}
+              label={card.label}
+              value={card.value}
+              rawValue={card.rawValue}
+              suffix={card.suffix}
+              decimals={card.decimals}
+              icon={card.icon}
+              colorClass={card.colorClass}
+            />
+          ))}
         </div>
       </div>
 
@@ -287,35 +312,18 @@ export const NetworkPowerStats = () => {
           Greenhouse Gas Emissions
         </h3>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {/* Annualized MainNet GHG Emissions */}
-          <div className="bg-card border-border shadow-card rounded-lg border p-5">
-            <div className="flex items-start gap-3">
-              <Leaf className="text-stat-green mt-0.5 shrink-0" size={24} />
-              <div className="flex-1">
-                <p className="text-muted-foreground mb-2 text-xs font-medium tracking-wide uppercase">
-                  Annualized MainNet GHG Emissions
-                </p>
-                <p className="text-stat-green font-mono text-3xl font-bold">
-                  {formatNumber(annualizedMainnetGHGEmissions, 2)} tCO₂e/y
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Annualized Validation GHG Emissions */}
-          <div className="bg-card border-border shadow-card rounded-lg border p-5">
-            <div className="flex items-start gap-3">
-              <Leaf className="text-stat-teal mt-0.5 shrink-0" size={24} />
-              <div className="flex-1">
-                <p className="text-muted-foreground mb-2 text-xs font-medium tracking-wide uppercase">
-                  Annualized Validation GHG Emissions
-                </p>
-                <p className="text-stat-teal font-mono text-3xl font-bold">
-                  {formatNumber(annualizedValidationGHGEmissions, 2)} tCO₂e/y
-                </p>
-              </div>
-            </div>
-          </div>
+          {emissionsCards.map((card) => (
+            <StatCard
+              key={card.label}
+              label={card.label}
+              value={card.value}
+              rawValue={card.rawValue}
+              suffix={card.suffix}
+              decimals={card.decimals}
+              icon={card.icon}
+              colorClass={card.colorClass}
+            />
+          ))}
         </div>
       </div>
     </div>

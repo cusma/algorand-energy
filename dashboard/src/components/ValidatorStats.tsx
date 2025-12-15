@@ -1,31 +1,8 @@
 import { Network, Shield, Radio, Database, AlertCircle } from 'lucide-react';
-import { ReactNode } from 'react';
 
+import { StatCard } from './ui';
 import { useNodeData } from '../hooks/useNodeData';
 import { formatNumber } from '../lib/utils';
-
-interface StatCardProps {
-  label: string;
-  value: string;
-  icon: ReactNode;
-  colorClass: string;
-}
-
-const StatCard = ({ label, value, icon, colorClass }: StatCardProps) => {
-  return (
-    <div className="bg-card border-border shadow-card rounded-lg border p-5">
-      <div className="flex items-start gap-3">
-        <div className={`mt-0.5 shrink-0 ${colorClass}`}>{icon}</div>
-        <div className="flex-1">
-          <p className="text-muted-foreground mb-2 text-xs font-medium tracking-wide uppercase">
-            {label}
-          </p>
-          <p className={`font-mono text-3xl font-bold ${colorClass}`}>{value}</p>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 export const ValidatorStats = () => {
   const { data, isLoading, error } = useNodeData();
@@ -64,24 +41,32 @@ export const ValidatorStats = () => {
     {
       label: 'Total Nodes',
       value: formatNumber(data.totalNodes, 0),
+      rawValue: data.totalNodes,
+      decimals: 0,
       colorClass: 'text-stat-green',
       icon: <Network size={24} strokeWidth={2} />,
     },
     {
       label: 'Validators',
       value: formatNumber(data.validators, 0),
+      rawValue: data.validators,
+      decimals: 0,
       colorClass: 'text-stat-teal',
       icon: <Shield size={24} strokeWidth={2} />,
     },
     {
       label: 'Relay Nodes',
       value: formatNumber(data.relays, 0),
+      rawValue: data.relays,
+      decimals: 0,
       colorClass: 'text-stat-cyan',
       icon: <Radio size={24} strokeWidth={2} />,
     },
     {
       label: 'Archival Nodes',
       value: formatNumber(data.archivers, 0),
+      rawValue: data.archivers,
+      decimals: 0,
       colorClass: 'text-stat-indigo',
       icon: <Database size={24} strokeWidth={2} />,
     },
@@ -98,6 +83,8 @@ export const ValidatorStats = () => {
             key={stat.label}
             label={stat.label}
             value={stat.value}
+            rawValue={stat.rawValue}
+            decimals={stat.decimals}
             icon={stat.icon}
             colorClass={stat.colorClass}
           />
