@@ -39,24 +39,60 @@ export const Layout = ({ children }: LayoutProps) => {
 
       <main className="relative container mx-auto max-w-7xl px-6 py-8">
         <div
-          className="pointer-events-none fixed inset-0 top-18 bottom-0 z-0 opacity-[0.03] dark:hidden"
+          className="pointer-events-none fixed z-0 flex flex-col gap-4 overflow-visible opacity-[0.03] dark:hidden"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23001324' fill-opacity='1'%3E%3Cpath transform='translate(8, 15) scale(0.6)' d='M28 28.0243H24.2515L21.8053 18.9452L16.5477 28.0243H12.3489L20.4665 13.9675L19.1521 9.06281L8.19878 28.0243H4L17.8864 3.97559H21.574L23.1684 9.96342H26.9655L24.3854 14.4665L28 28.0243Z'/%3E%3Cpath transform='translate(38, 15) scale(0.9)' d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundSize: '60px 60px',
             transform: 'rotate(45deg) scale(2.5)',
             transformOrigin: 'center',
+            width: '200%',
+            height: '200%',
+            left: '-50%',
+            top: 'calc(-50% + 4.5rem)',
           }}
-        />
+        >
+          {Array.from({ length: 12 }).map((_, index) => (
+            <div
+              key={`light-row-${index}`}
+              style={{
+                flex: 1,
+                minHeight: 0,
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23001324' fill-opacity='1'%3E%3Cpath transform='translate(8, 15) scale(0.6)' d='M28 28.0243H24.2515L21.8053 18.9452L16.5477 28.0243H12.3489L20.4665 13.9675L19.1521 9.06281L8.19878 28.0243H4L17.8864 3.97559H21.574L23.1684 9.96342H26.9655L24.3854 14.4665L28 28.0243Z'/%3E%3Cpath transform='translate(38, 15) scale(0.9)' d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/%3E%3C/g%3E%3C/svg%3E")`,
+                backgroundSize: '60px 60px',
+                animation:
+                  index % 2 === 0
+                    ? 'slideLeftToRight 20s linear infinite'
+                    : 'slideRightToLeft 20s linear infinite',
+              }}
+            />
+          ))}
+        </div>
 
         <div
-          className="pointer-events-none fixed inset-0 top-18 bottom-0 z-0 hidden opacity-[0.03] dark:block"
+          className="pointer-events-none fixed z-0 hidden flex-col gap-4 overflow-visible opacity-[0.03] dark:flex"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath transform='translate(8, 15) scale(0.6)' d='M28 28.0243H24.2515L21.8053 18.9452L16.5477 28.0243H12.3489L20.4665 13.9675L19.1521 9.06281L8.19878 28.0243H4L17.8864 3.97559H21.574L23.1684 9.96342H26.9655L24.3854 14.4665L28 28.0243Z'/%3E%3Cpath transform='translate(38, 15) scale(0.9)' d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundSize: '60px 60px',
             transform: 'rotate(45deg) scale(2.5)',
             transformOrigin: 'center',
+            width: '200%',
+            height: '200%',
+            left: '-50%',
+            top: 'calc(-50% + 4.5rem)',
           }}
-        />
+        >
+          {Array.from({ length: 12 }).map((_, index) => (
+            <div
+              key={`dark-row-${index}`}
+              style={{
+                flex: 1,
+                minHeight: 0,
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath transform='translate(8, 15) scale(0.6)' d='M28 28.0243H24.2515L21.8053 18.9452L16.5477 28.0243H12.3489L20.4665 13.9675L19.1521 9.06281L8.19878 28.0243H4L17.8864 3.97559H21.574L23.1684 9.96342H26.9655L24.3854 14.4665L28 28.0243Z'/%3E%3Cpath transform='translate(38, 15) scale(0.9)' d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/%3E%3C/g%3E%3C/svg%3E")`,
+                backgroundSize: '60px 60px',
+                animation:
+                  index % 2 === 0
+                    ? 'slideLeftToRight 20s linear infinite'
+                    : 'slideRightToLeft 20s linear infinite',
+              }}
+            />
+          ))}
+        </div>
 
         <div className="relative z-10 space-y-6">{children}</div>
       </main>

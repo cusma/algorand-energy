@@ -97,3 +97,29 @@ h6 {
 .text-muted-foreground {
   color: var(--color-muted-foreground);
 }
+
+/* Background animation keyframes */
+@keyframes slideLeftToRight {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 60px 0;
+  }
+}
+
+@keyframes slideRightToLeft {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -60px 0;
+  }
+}
+
+/* Disable animations when user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-play-state: paused !important;
+  }
+}
