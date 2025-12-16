@@ -106,13 +106,51 @@ export const NetworkPowerStats = () => {
   // Loading state
   if (isLoading || emissionsLoading) {
     return (
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {[...Array(6)].map((_, i) => (
-          <div key={i} className="bg-card border-border animate-pulse rounded-lg border p-5">
-            <div className="bg-muted mb-3 h-4 w-3/4 rounded"></div>
-            <div className="bg-muted h-8 w-1/2 rounded"></div>
+      <div className="space-y-6">
+        {/* Instantaneous Power Consumption Section */}
+        <div>
+          <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
+            Instantaneous Power Consumption
+          </h3>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="bg-card border-border animate-pulse rounded-lg border p-5">
+                <div className="bg-muted mb-3 h-4 w-3/4 rounded"></div>
+                <div className="bg-muted h-8 w-1/2 rounded"></div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+
+        {/* Annualized Energy Consumption Section */}
+        <div>
+          <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
+            Annualized Energy Consumption
+          </h3>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="bg-card border-border animate-pulse rounded-lg border p-5">
+                <div className="bg-muted mb-3 h-4 w-3/4 rounded"></div>
+                <div className="bg-muted h-8 w-1/2 rounded"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Greenhouse Gas Emissions Section */}
+        <div>
+          <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
+            Greenhouse Gas Emissions
+          </h3>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="bg-card border-border animate-pulse rounded-lg border p-5">
+                <div className="bg-muted mb-3 h-4 w-3/4 rounded"></div>
+                <div className="bg-muted h-8 w-1/2 rounded"></div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
