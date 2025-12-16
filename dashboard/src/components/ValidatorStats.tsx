@@ -11,7 +11,7 @@ export const ValidatorStats = () => {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {[...Array(4)].map((_, i) => (
           <div key={i} className="bg-card border-border rounded-lg border p-5">
             <div className="flex items-start gap-3">
@@ -78,7 +78,7 @@ export const ValidatorStats = () => {
       <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
         Network Statistics
       </h3>
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (
           <StatCard
             key={stat.label}
