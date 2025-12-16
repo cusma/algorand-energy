@@ -142,7 +142,7 @@ export const NetworkPowerStats = () => {
 
   const weightedAvgEmissionsIntensity = emissionsData.reduce((sum, country) => {
     if (country.carbonIntensity !== null) {
-      return sum + (country.nodePercentage / 100) * (country.carbonIntensity / 1000);
+      return sum + (country.nodePercentage / 100) * country.carbonIntensity;
     }
     return sum;
   }, 0);
@@ -152,11 +152,11 @@ export const NetworkPowerStats = () => {
 
   const validatorDistributedLedger = LEDGER_SIZE_GB * data.validators;
 
-  const mainnetEnergyEmissions = mainnetEnergyKWh * weightedAvgEmissionsIntensity;
+  const mainnetEnergyEmissions = (mainnetEnergyKWh * weightedAvgEmissionsIntensity) / 1000;
   const mainnetStorageEmissions = mainnetDistributedLedger * AVG_SSD_ANNUALIZED_EMISSIONS_INTENSITY;
   const annualizedMainnetGHGEmissions = (mainnetEnergyEmissions + mainnetStorageEmissions) / 1000;
 
-  const validatorEnergyEmissions = validatorEnergyKWh * weightedAvgEmissionsIntensity;
+  const validatorEnergyEmissions = (validatorEnergyKWh * weightedAvgEmissionsIntensity) / 1000;
   const validatorStorageEmissions =
     validatorDistributedLedger * AVG_SSD_ANNUALIZED_EMISSIONS_INTENSITY;
   const annualizedValidationGHGEmissions =
@@ -245,9 +245,9 @@ export const NetworkPowerStats = () => {
   const emissionsCards = [
     {
       label: 'Weighted Avg. Emissions Intensity',
-      value: `${formatNumber(weightedAvgEmissionsIntensity, 2)} kgCO₂e/kWh`,
+      value: `${formatNumber(weightedAvgEmissionsIntensity, 2)} gCO₂e/kWh`,
       rawValue: weightedAvgEmissionsIntensity,
-      suffix: ' kgCO₂e/kWh',
+      suffix: ' gCO₂e/kWh',
       decimals: 2,
       icon: <Leaf size={24} strokeWidth={2} />,
       colorClass: 'text-stat-blue',
