@@ -1,9 +1,9 @@
 {
-  "timestamp": "2025-12-16T09:13:07.805Z",
+  "timestamp": "2025-12-16T09:37:51.427Z",
   "nodesByCountry": [
     {
       "countryCode": "US",
-      "nodeCount": 1225
+      "nodeCount": 1228
     },
     {
       "countryCode": "DE",
@@ -11,11 +11,11 @@
     },
     {
       "countryCode": "PK",
-      "nodeCount": 193
+      "nodeCount": 194
     },
     {
       "countryCode": "IE",
-      "nodeCount": 144
+      "nodeCount": 145
     },
     {
       "countryCode": "FR",
@@ -79,7 +79,7 @@
     },
     {
       "countryCode": "SA",
-      "nodeCount": 22
+      "nodeCount": 21
     },
     {
       "countryCode": "HK",
@@ -110,11 +110,11 @@
       "nodeCount": 11
     },
     {
-      "countryCode": "BD",
-      "nodeCount": 11
+      "countryCode": "GR",
+      "nodeCount": 10
     },
     {
-      "countryCode": "GR",
+      "countryCode": "BD",
       "nodeCount": 10
     },
     {
