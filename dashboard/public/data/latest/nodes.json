@@ -1,10 +1,10 @@
 {
-  "timestamp": "2025-12-22T02:44:54.844Z",
+  "timestamp": "2025-12-23T02:41:15.596Z",
   "totalNodes": 3717,
-  "validators": 1658,
+  "validators": 1655,
   "relays": 78,
   "archivers": 19,
-  "apiNodes": 1962,
+  "apiNodes": 1965,
   "historicalData": [
     {
       "date": "2024-05-02",
@@ -2392,6 +2392,10 @@
     },
     {
       "date": "2025-12-20",
+      "nodeCount": 0
+    },
+    {
+      "date": "2025-12-21",
       "nodeCount": 0
     }
   ]
