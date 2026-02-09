@@ -1,17 +1,17 @@
 {
-  "timestamp": "2026-02-09T14:40:56.519Z",
+  "timestamp": "2026-02-09T14:43:41.471Z",
   "nodesByCountry": [
     {
       "countryCode": "US",
-      "nodeCount": 1191
+      "nodeCount": 1190
     },
     {
       "countryCode": "DE",
-      "nodeCount": 297
+      "nodeCount": 296
     },
     {
       "countryCode": "PK",
-      "nodeCount": 162
+      "nodeCount": 163
     },
     {
       "countryCode": "IE",
@@ -43,7 +43,7 @@
     },
     {
       "countryCode": "IN",
-      "nodeCount": 54
+      "nodeCount": 53
     },
     {
       "countryCode": "AT",
