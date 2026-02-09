@@ -1,12 +1,9 @@
 import { z } from 'zod';
 
-// Our World in Data API response schema - based on actual API response
-// The API returns parallel arrays at the same index:
-// - years[i], entities[i], values[i] all correspond to the same data point
 export const owidDataResponseSchema = z.object({
-  values: z.array(z.number()), // Carbon intensity values
-  years: z.array(z.number()), // Years
-  entities: z.array(z.number()), // Entity IDs
+  values: z.array(z.number()),
+  years: z.array(z.number()),
+  entities: z.array(z.number()),
 });
 
 export const owidMetadataResponseSchema = z
@@ -33,25 +30,23 @@ export const owidMetadataResponseSchema = z
   })
   .passthrough(); // Allow additional fields we don't use
 
-// Unified carbon intensity data schema for frontend
-export const carbonIntensityDataSchema = z.object({
-  timestamp: z.string(),
-  globalAverage: z.number().optional(),
-  countries: z.array(
-    z.object({
-      code: z.string(),
-      name: z.string(),
-      intensity: z.number(),
-      year: z.number(),
-    })
-  ),
-  metadata: z.object({
-    unit: z.string(),
-    description: z.string(),
-    source: z.string(),
-  }),
-});
+export interface CountryIntensity {
+  code: string;
+  name: string;
+  intensity: number;
+  year: number;
+}
 
-export type CarbonIntensityData = z.infer<typeof carbonIntensityDataSchema>;
+export interface CarbonIntensityData {
+  timestamp: string;
+  globalAverage?: number;
+  countries: CountryIntensity[];
+  metadata: {
+    unit: string;
+    description: string;
+    source: string;
+  };
+}
+
 export type OwidDataResponse = z.infer<typeof owidDataResponseSchema>;
 export type OwidMetadataResponse = z.infer<typeof owidMetadataResponseSchema>;
