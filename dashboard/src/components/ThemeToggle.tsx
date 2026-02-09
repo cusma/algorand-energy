@@ -11,24 +11,14 @@ export const ThemeToggle = () => {
     return savedTheme || 'system';
   });
 
-  const applyTheme = (newTheme: Theme) => {
-    const root = document.documentElement;
-
-    if (newTheme === 'dark') {
-      root.classList.add('dark');
-    } else if (newTheme === 'light') {
-      root.classList.remove('dark');
-    } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (prefersDark) {
-        root.classList.add('dark');
-      } else {
-        root.classList.remove('dark');
-      }
-    }
-  };
-
   useEffect(() => {
+    const applyTheme = (t: Theme) => {
+      const isDark =
+        t === 'dark' ||
+        (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.classList.toggle('dark', isDark);
+    };
+
     applyTheme(theme);
 
     if (theme === 'system') {

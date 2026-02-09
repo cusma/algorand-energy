@@ -1,19 +1,4 @@
-/**
- * Mapping of ISO 3166-1 alpha-2 to alpha-3 country codes.
- *
- * Used to convert 2-letter country codes from node geolocation data to
- * 3-letter codes used in carbon intensity datasets from Our World in Data.
- *
- * Standard: ISO 3166-1 (International Organization for Standardization)
- * Coverage: 84 countries where Algorand nodes are currently located
- *
- * @constant {Record<string, string>}
- * @see {@link https://en.wikipedia.org/wiki/ISO_3166-1 | ISO 3166-1 Standard}
- *
- * @example
- * ISO_2_TO_3['US']  // Returns: 'USA'
- * ISO_2_TO_3['DE']  // Returns: 'DEU'
- */
+/** ISO 3166-1 alpha-2 to alpha-3 country code mapping */
 export const ISO_2_TO_3: Record<string, string> = {
   US: 'USA',
   DE: 'DEU',
@@ -98,21 +83,7 @@ export const ISO_2_TO_3: Record<string, string> = {
   KW: 'KWT',
 };
 
-/**
- * Mapping of ISO 3166-1 alpha-2 country codes to full country names in English.
- *
- * Used for displaying human-readable country names in the emissions table and
- * other UI components. Names follow official short-form conventions from the
- * ISO 3166-1 standard.
- *
- * Coverage: 84 countries matching the ISO_2_TO_3 mapping
- *
- * @constant {Record<string, string>}
- *
- * @example
- * COUNTRY_NAMES['US']  // Returns: 'United States'
- * COUNTRY_NAMES['GB']  // Returns: 'United Kingdom'
- */
+/** ISO alpha-2 code to English country name */
 export const COUNTRY_NAMES: Record<string, string> = {
   US: 'United States',
   DE: 'Germany',
@@ -197,17 +168,13 @@ export const COUNTRY_NAMES: Record<string, string> = {
   KW: 'Kuwait',
 };
 
-/**
- * Generates a flag emoji from a 2-letter ISO country code
- * Uses Unicode regional indicator symbols (U+1F1E6 to U+1F1FF)
- *
- * @param countryCode - 2-letter ISO country code (e.g., 'US', 'DE')
- * @returns Flag emoji (e.g., 🇺🇸, 🇩🇪)
- */
+const REGIONAL_INDICATOR_OFFSET = 0x1f1a5;
+
+/** Converts a 2-letter ISO country code to a flag emoji via Unicode regional indicators */
 export const getCountryFlag = (countryCode: string): string => {
   const codePoints = countryCode
     .toUpperCase()
     .split('')
-    .map((char) => 127397 + char.charCodeAt(0));
+    .map((char) => REGIONAL_INDICATOR_OFFSET + char.charCodeAt(0));
   return String.fromCodePoint(...codePoints);
 };

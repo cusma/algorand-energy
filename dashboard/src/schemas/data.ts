@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-// Node data schema
 export const nodeDataSchema = z.object({
   timestamp: z.string(),
   totalNodes: z.number(),
@@ -18,7 +17,6 @@ export const nodeDataSchema = z.object({
     .optional(),
 });
 
-// Carbon intensity data schema
 export const carbonIntensityDataSchema = z.object({
   timestamp: z.string(),
   globalAverage: z.number().optional(),
@@ -39,7 +37,6 @@ export const carbonIntensityDataSchema = z.object({
     .optional(),
 });
 
-// Geographical data schema
 export const geographicalDataSchema = z.object({
   timestamp: z.string(),
   nodesByCountry: z.array(

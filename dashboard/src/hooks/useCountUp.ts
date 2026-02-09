@@ -47,7 +47,6 @@ export function useCountUp(end: number, duration: number = 2000): number {
     startTimeRef.current = undefined;
 
     const animate = (timestamp: number) => {
-      // Set start time on first frame
       if (!startTimeRef.current) {
         startTimeRef.current = timestamp;
       }
@@ -56,20 +55,14 @@ export function useCountUp(end: number, duration: number = 2000): number {
       const elapsed = timestamp - startTimeRef.current;
       const progress = Math.min(elapsed / duration, 1);
 
-      // Apply easing function
       const easedProgress = easeOutCubic(progress);
+      setValue(easedProgress * end);
 
-      // Calculate current value
-      const currentValue = easedProgress * end;
-      setValue(currentValue);
-
-      // Continue animation if not complete
       if (progress < 1) {
         frameRef.current = requestAnimationFrame(animate);
       }
     };
 
-    // Start animation
     frameRef.current = requestAnimationFrame(animate);
 
     // Cleanup on unmount or when dependencies change

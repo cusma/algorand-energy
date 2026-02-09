@@ -1,70 +1,25 @@
-import { Network, Shield, Radio, Database, AlertCircle } from 'lucide-react';
+import { Network, Shield, Radio, Database } from 'lucide-react';
 
-import { StatCard } from './ui';
-import { useNodeData } from '../hooks/useNodeData';
-import { formatNumber } from '../lib/utils';
-import { Alert, AlertDescription, AlertTitle } from './ui/alert';
+import { ErrorCard, StatCard } from './ui';
 import { Skeleton } from './ui/skeleton';
+import { useNodeData } from '../hooks/useNodeData';
+
+const GRID_CLASSES = 'grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4';
 
 export const ValidatorStats = () => {
   const { data, isLoading, error } = useNodeData();
 
   if (error || (!isLoading && !data)) {
-    return (
-      <Alert variant="destructive">
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Failed to load node data</AlertTitle>
-        <AlertDescription>Please check your connection and try again</AlertDescription>
-      </Alert>
-    );
+    return <ErrorCard title="Failed to load node data" />;
   }
 
-  const stats =
-    data && !isLoading
-      ? [
-          {
-            label: 'Total Nodes',
-            value: formatNumber(data.totalNodes, 0),
-            rawValue: data.totalNodes,
-            decimals: 0,
-            colorClass: 'text-stat-green',
-            icon: <Network size={24} strokeWidth={2} />,
-          },
-          {
-            label: 'Validators',
-            value: formatNumber(data.validators, 0),
-            rawValue: data.validators,
-            decimals: 0,
-            colorClass: 'text-stat-teal',
-            icon: <Shield size={24} strokeWidth={2} />,
-            infoContent: 'Assuming 1 Node per Validator Account (worst case scenario)',
-          },
-          {
-            label: 'Relay Nodes',
-            value: formatNumber(data.relays, 0),
-            rawValue: data.relays,
-            decimals: 0,
-            colorClass: 'text-stat-cyan',
-            icon: <Radio size={24} strokeWidth={2} />,
-          },
-          {
-            label: 'Archival Nodes',
-            value: formatNumber(data.archivers, 0),
-            rawValue: data.archivers,
-            decimals: 0,
-            colorClass: 'text-stat-indigo',
-            icon: <Database size={24} strokeWidth={2} />,
-          },
-        ]
-      : [];
-
-  return (
-    <div>
-      <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
-        Network Statistics
-      </h3>
-      {isLoading ? (
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+  if (isLoading) {
+    return (
+      <div>
+        <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
+          Network Statistics
+        </h3>
+        <div className={GRID_CLASSES}>
           {[...Array(4)].map((_, i) => (
             <div key={i} className="bg-card border-border rounded-lg border p-5">
               <div className="flex items-start gap-3">
@@ -77,22 +32,58 @@ export const ValidatorStats = () => {
             </div>
           ))}
         </div>
-      ) : (
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {stats.map((stat) => (
-            <StatCard
-              key={stat.label}
-              label={stat.label}
-              value={stat.value}
-              rawValue={stat.rawValue}
-              decimals={stat.decimals}
-              icon={stat.icon}
-              colorClass={stat.colorClass}
-              infoContent={stat.infoContent}
-            />
-          ))}
-        </div>
-      )}
+      </div>
+    );
+  }
+
+  if (!data) return null;
+
+  const stats = [
+    {
+      label: 'Total Nodes',
+      rawValue: data.totalNodes,
+      colorClass: 'text-stat-green',
+      icon: <Network size={24} strokeWidth={2} />,
+    },
+    {
+      label: 'Validators',
+      rawValue: data.validators,
+      colorClass: 'text-stat-teal',
+      icon: <Shield size={24} strokeWidth={2} />,
+      infoContent: 'Assuming 1 Node per Validator Account (worst case scenario)',
+    },
+    {
+      label: 'Relay Nodes',
+      rawValue: data.relays,
+      colorClass: 'text-stat-cyan',
+      icon: <Radio size={24} strokeWidth={2} />,
+    },
+    {
+      label: 'Archival Nodes',
+      rawValue: data.archivers,
+      colorClass: 'text-stat-indigo',
+      icon: <Database size={24} strokeWidth={2} />,
+    },
+  ];
+
+  return (
+    <div>
+      <h3 className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
+        Network Statistics
+      </h3>
+      <div className={GRID_CLASSES}>
+        {stats.map((stat) => (
+          <StatCard
+            key={stat.label}
+            label={stat.label}
+            rawValue={stat.rawValue}
+            decimals={0}
+            icon={stat.icon}
+            colorClass={stat.colorClass}
+            infoContent={stat.infoContent}
+          />
+        ))}
+      </div>
     </div>
   );
 };
