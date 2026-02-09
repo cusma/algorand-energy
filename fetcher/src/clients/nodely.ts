@@ -357,9 +357,10 @@ export async function fetchNodesByCountry(): Promise<GeographicalData> {
 }
 
 /**
- * Aggregate all Nodely data into a unified NodeData object
+ * Aggregate all Nodely data into a unified NodeData object.
+ * Returns the data along with any detected anomalies.
  */
-export async function fetchAllNodeData(): Promise<NodeData> {
+export async function fetchAllNodeData(): Promise<{ data: NodeData; anomalies: string[] }> {
   try {
     // Fetch all data in parallel
     const [nodeCountResponse, , nodeTypeResponse] = await Promise.all([
@@ -415,6 +416,29 @@ export async function fetchAllNodeData(): Promise<NodeData> {
     const totalNodes =
       nodeTypes.apiNodes + nodeTypes.validators + nodeTypes.relays + nodeTypes.archivers;
 
+    // Detect data anomalies
+    const anomalies: string[] = [];
+
+    if (nodeTypes.apiNodes < 0) {
+      anomalies.push(
+        `API nodes count is negative (${nodeTypes.apiNodes}). Validator count (${nodeTypes.validators}) may exceed total tracked nodes.`
+      );
+    }
+
+    if (nodeTypes.validators > totalNodes) {
+      anomalies.push(
+        `Validator count (${nodeTypes.validators}) exceeds total nodes (${totalNodes}). Upstream data source may be inconsistent.`
+      );
+    }
+
+    if (nodeTypes.validators < 0 || nodeTypes.relays < 0 || nodeTypes.archivers < 0) {
+      anomalies.push('One or more node type counts are negative.');
+    }
+
+    if (anomalies.length > 0) {
+      console.warn('Data anomalies detected:', anomalies);
+    }
+
     const nodeData: NodeData = {
       timestamp: new Date().toISOString(),
       totalNodes,
@@ -425,7 +449,7 @@ export async function fetchAllNodeData(): Promise<NodeData> {
       historicalData: historicalData.length > 0 ? historicalData : undefined,
     };
 
-    return nodeData;
+    return { data: nodeData, anomalies };
   } catch (error) {
     console.error('Error aggregating node data:', error);
     throw error;

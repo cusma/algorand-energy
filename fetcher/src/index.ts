@@ -20,17 +20,28 @@ async function main() {
   ]);
 
   if (nodeData.status === 'fulfilled') {
-    try {
-      await writeDataFiles('nodes.json', nodeData.value);
-      console.log('✓ Node data fetched and saved');
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      console.error('✗ Failed to save node data:', errorMessage);
+    const { data: nodeResult, anomalies } = nodeData.value;
+    if (anomalies.length > 0) {
+      console.warn(`⚠ Skipping nodes.json write due to ${anomalies.length} anomaly(s):`);
+      anomalies.forEach((a) => console.warn(`  - ${a}`));
       errors.push({
-        source: 'nodes',
-        message: errorMessage,
+        source: 'nodes-anomaly',
+        message: anomalies.join('; '),
         timestamp: new Date().toISOString(),
       });
+    } else {
+      try {
+        await writeDataFiles('nodes.json', nodeResult);
+        console.log('✓ Node data fetched and saved');
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        console.error('✗ Failed to save node data:', errorMessage);
+        errors.push({
+          source: 'nodes',
+          message: errorMessage,
+          timestamp: new Date().toISOString(),
+        });
+      }
     }
   } else {
     console.error('✗ Failed to fetch node data:', nodeData.reason);
@@ -105,9 +116,19 @@ async function main() {
     lastUpdate: new Date().toISOString(),
     dataFreshness: {
       nodes: {
-        lastSuccessfulFetch: nodeData.status === 'fulfilled' ? new Date().toISOString() : 'N/A',
-        isStale: nodeData.status === 'rejected',
-        error: nodeData.status === 'rejected' ? nodeData.reason?.message : undefined,
+        lastSuccessfulFetch:
+          nodeData.status === 'fulfilled' && nodeData.value.anomalies.length === 0
+            ? new Date().toISOString()
+            : 'N/A',
+        isStale:
+          nodeData.status === 'rejected' ||
+          (nodeData.status === 'fulfilled' && nodeData.value.anomalies.length > 0),
+        error:
+          nodeData.status === 'rejected'
+            ? nodeData.reason?.message
+            : nodeData.status === 'fulfilled' && nodeData.value.anomalies.length > 0
+              ? `Anomalous data skipped: ${nodeData.value.anomalies.join('; ')}`
+              : undefined,
       },
       carbonIntensity: {
         lastSuccessfulFetch:
