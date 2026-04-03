@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-02T03:07:57.003Z",
+  "timestamp": "2026-04-03T03:07:53.876Z",
   "totalNodes": 3717,
   "validators": 1523,
   "relays": 78,
@@ -2796,6 +2796,10 @@
     },
     {
       "date": "2026-03-31",
+      "nodeCount": 0
+    },
+    {
+      "date": "2026-04-01",
       "nodeCount": 0
     }
   ]
