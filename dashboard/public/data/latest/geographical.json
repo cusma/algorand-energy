@@ -1,41 +1,41 @@
 {
-  "timestamp": "2026-05-13T03:12:07.426Z",
+  "timestamp": "2026-05-14T03:11:20.457Z",
   "nodesByCountry": [
     {
       "countryCode": "US",
-      "nodeCount": 1150
+      "nodeCount": 1124
     },
     {
       "countryCode": "DE",
-      "nodeCount": 311
+      "nodeCount": 312
     },
     {
       "countryCode": "PK",
-      "nodeCount": 156
-    },
-    {
-      "countryCode": "IE",
-      "nodeCount": 131
+      "nodeCount": 153
     },
     {
       "countryCode": "FR",
       "nodeCount": 131
     },
     {
-      "countryCode": "GB",
-      "nodeCount": 107
+      "countryCode": "IE",
+      "nodeCount": 127
     },
     {
-      "countryCode": "SG",
-      "nodeCount": 103
+      "countryCode": "GB",
+      "nodeCount": 102
     },
     {
       "countryCode": "CA",
+      "nodeCount": 100
+    },
+    {
+      "countryCode": "SG",
       "nodeCount": 99
     },
     {
       "countryCode": "NL",
-      "nodeCount": 63
+      "nodeCount": 64
     },
     {
       "countryCode": "FI",
@@ -43,26 +43,22 @@
     },
     {
       "countryCode": "JP",
-      "nodeCount": 42
+      "nodeCount": 43
+    },
+    {
+      "countryCode": "IN",
+      "nodeCount": 40
     },
     {
       "countryCode": "IT",
       "nodeCount": 40
     },
     {
-      "countryCode": "IN",
-      "nodeCount": 39
-    },
-    {
-      "countryCode": "AE",
-      "nodeCount": 36
-    },
-    {
       "countryCode": "PL",
       "nodeCount": 34
     },
     {
-      "countryCode": "AT",
+      "countryCode": "AE",
       "nodeCount": 31
     },
     {
@@ -74,24 +70,28 @@
       "nodeCount": 30
     },
     {
+      "countryCode": "AT",
+      "nodeCount": 29
+    },
+    {
       "countryCode": "ES",
-      "nodeCount": 23
+      "nodeCount": 22
+    },
+    {
+      "countryCode": "SA",
+      "nodeCount": 19
     },
     {
       "countryCode": "HK",
       "nodeCount": 19
     },
     {
-      "countryCode": "GR",
-      "nodeCount": 16
-    },
-    {
-      "countryCode": "SA",
-      "nodeCount": 15
-    },
-    {
       "countryCode": "BE",
       "nodeCount": 15
+    },
+    {
+      "countryCode": "GR",
+      "nodeCount": 14
     },
     {
       "countryCode": "KR",
@@ -99,18 +99,18 @@
     },
     {
       "countryCode": "MX",
-      "nodeCount": 12
-    },
-    {
-      "countryCode": "PH",
       "nodeCount": 11
     },
     {
-      "countryCode": "IL",
-      "nodeCount": 10
+      "countryCode": "BR",
+      "nodeCount": 11
     },
     {
-      "countryCode": "BR",
+      "countryCode": "CN",
+      "nodeCount": 11
+    },
+    {
+      "countryCode": "PH",
       "nodeCount": 10
     },
     {
@@ -118,15 +118,11 @@
       "nodeCount": 10
     },
     {
-      "countryCode": "CN",
+      "countryCode": "IL",
       "nodeCount": 10
     },
     {
       "countryCode": "SE",
-      "nodeCount": 9
-    },
-    {
-      "countryCode": "BD",
       "nodeCount": 9
     },
     {
@@ -154,31 +150,31 @@
       "nodeCount": 5
     },
     {
-      "countryCode": "TH",
-      "nodeCount": 5
-    },
-    {
-      "countryCode": "CZ",
-      "nodeCount": 5
-    },
-    {
       "countryCode": "NG",
       "nodeCount": 4
     },
     {
-      "countryCode": "UY",
+      "countryCode": "BD",
       "nodeCount": 4
     },
     {
-      "countryCode": "BT",
+      "countryCode": "CZ",
+      "nodeCount": 4
+    },
+    {
+      "countryCode": "TH",
+      "nodeCount": 4
+    },
+    {
+      "countryCode": "OM",
+      "nodeCount": 3
+    },
+    {
+      "countryCode": "UY",
       "nodeCount": 3
     },
     {
       "countryCode": "VN",
-      "nodeCount": 3
-    },
-    {
-      "countryCode": "CO",
       "nodeCount": 3
     },
     {
@@ -190,11 +186,11 @@
       "nodeCount": 3
     },
     {
-      "countryCode": "CY",
+      "countryCode": "CO",
       "nodeCount": 3
     },
     {
-      "countryCode": "OM",
+      "countryCode": "CY",
       "nodeCount": 3
     },
     {
@@ -202,7 +198,7 @@
       "nodeCount": 2
     },
     {
-      "countryCode": "MV",
+      "countryCode": "EE",
       "nodeCount": 2
     },
     {
@@ -210,11 +206,11 @@
       "nodeCount": 2
     },
     {
-      "countryCode": "BG",
+      "countryCode": "EC",
       "nodeCount": 2
     },
     {
-      "countryCode": "HR",
+      "countryCode": "BG",
       "nodeCount": 2
     },
     {
@@ -226,6 +222,14 @@
       "nodeCount": 2
     },
     {
+      "countryCode": "DO",
+      "nodeCount": 2
+    },
+    {
+      "countryCode": "PR",
+      "nodeCount": 2
+    },
+    {
       "countryCode": "LV",
       "nodeCount": 2
     },
@@ -234,27 +238,19 @@
       "nodeCount": 2
     },
     {
-      "countryCode": "EE",
-      "nodeCount": 2
-    },
-    {
-      "countryCode": "EC",
-      "nodeCount": 2
-    },
-    {
       "countryCode": "UA",
       "nodeCount": 2
     },
     {
-      "countryCode": "PR",
+      "countryCode": "HR",
       "nodeCount": 2
     },
     {
-      "countryCode": "DO",
-      "nodeCount": 2
+      "countryCode": "BT",
+      "nodeCount": 1
     },
     {
-      "countryCode": "AF",
+      "countryCode": "CR",
       "nodeCount": 1
     },
     {
@@ -266,15 +262,7 @@
       "nodeCount": 1
     },
     {
-      "countryCode": "KZ",
-      "nodeCount": 1
-    },
-    {
       "countryCode": "SI",
-      "nodeCount": 1
-    },
-    {
-      "countryCode": "CR",
       "nodeCount": 1
     },
     {
@@ -286,11 +274,11 @@
       "nodeCount": 1
     },
     {
-      "countryCode": "KY",
+      "countryCode": "MV",
       "nodeCount": 1
     },
     {
-      "countryCode": "VE",
+      "countryCode": "KY",
       "nodeCount": 1
     },
     {
@@ -298,11 +286,15 @@
       "nodeCount": 1
     },
     {
-      "countryCode": "DZ",
+      "countryCode": "VE",
       "nodeCount": 1
     },
     {
-      "countryCode": "BY",
+      "countryCode": "SK",
+      "nodeCount": 1
+    },
+    {
+      "countryCode": "DZ",
       "nodeCount": 1
     },
     {
@@ -314,7 +306,7 @@
       "nodeCount": 1
     },
     {
-      "countryCode": "SK",
+      "countryCode": "KZ",
       "nodeCount": 1
     },
     {
@@ -326,7 +318,7 @@
       "nodeCount": 1
     }
   ],
-  "totalCountries": 81,
+  "totalCountries": 79,
   "metadata": {
     "source": "Nodely Node Telemetry Service",
     "description": "Distribution of Algorand nodes by country (last 24h)"
