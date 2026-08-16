@@ -1,16 +1,16 @@
 {
-  "lastUpdate": "2026-08-15T02:51:19.980Z",
+  "lastUpdate": "2026-08-16T02:59:33.398Z",
   "dataFreshness": {
     "nodes": {
-      "lastSuccessfulFetch": "2026-08-15T02:51:19.980Z",
+      "lastSuccessfulFetch": "2026-08-16T02:59:33.398Z",
       "isStale": false
     },
     "carbonIntensity": {
-      "lastSuccessfulFetch": "2026-08-15T02:51:19.980Z",
+      "lastSuccessfulFetch": "2026-08-16T02:59:33.398Z",
       "isStale": false
     },
     "geographical": {
-      "lastSuccessfulFetch": "2026-08-15T02:51:19.980Z",
+      "lastSuccessfulFetch": "2026-08-16T02:59:33.398Z",
       "isStale": false
     }
   },
