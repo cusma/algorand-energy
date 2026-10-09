@@ -24,3 +24,10 @@ export const grafanaResponseSchema = z.object({
 });
 
 export type GrafanaResponse = z.infer<typeof grafanaResponseSchema>;
+
+/** Body that Grafana returns when the datasource rejects a query */
+export const grafanaErrorSchema = z.object({
+  results: z.object({
+    A: z.object({ error: z.string() }),
+  }),
+});

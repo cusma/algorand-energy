@@ -36,7 +36,7 @@ function parseHistoricalData(response: GrafanaResponse): { date: string; nodeCou
     if (typeof ts !== 'string' && typeof ts !== 'number') return [];
     const date = new Date(ts);
     if (isNaN(date.getTime())) return [];
-    return [{ date: date.toISOString().split('T')[0], nodeCount: Number(row.node_cnt ?? 0) }];
+    return [{ date: date.toISOString().split('T')[0], nodeCount: Number(row.nodes ?? 0) }];
   });
 }
 

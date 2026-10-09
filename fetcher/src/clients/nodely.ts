@@ -1,12 +1,11 @@
-import { ofetch } from 'ofetch';
+import { FetchError, ofetch } from 'ofetch';
 
+import { TIME_RANGES, GRAFANA_DATASOURCES, GRAFANA_DATASOURCE_IDS } from '../constants.js';
 import {
-  TIME_RANGES,
-  GRAFANA_DATASOURCES,
-  GRAFANA_DATASOURCE_IDS,
-  ALGORAND_INFRASTRUCTURE,
-} from '../constants.js';
-import { grafanaResponseSchema, type GrafanaResponse } from '../schemas/grafana.js';
+  grafanaErrorSchema,
+  grafanaResponseSchema,
+  type GrafanaResponse,
+} from '../schemas/grafana.js';
 
 import type { GeographicalData } from '../types/geographical.js';
 
@@ -19,7 +18,6 @@ const GRAFANA_DEFAULT_MAX_DATA_POINTS = 751;
 /** Grafana response format identifiers */
 const GRAFANA_FORMAT = {
   TABLE: 1,
-  LOGS: 2,
 } as const;
 
 const DEFAULT_QUERY_META = {
@@ -31,7 +29,8 @@ const DEFAULT_QUERY_META = {
     queryType: 'table',
     table: '',
   },
-  timezone: 'Europe/Rome',
+  // Grafana returns each day at midnight in this timezone; UTC keeps the ISO dates on the same day.
+  timezone: 'UTC',
 };
 
 const BASE_CLICKHOUSE_QUERY = {
@@ -86,9 +85,19 @@ async function queryGrafana(config: GrafanaQueryConfig): Promise<GrafanaResponse
       'x-datasource-uid': config.datasourceUid,
       'x-plugin-id': config.pluginId,
     },
+  }).catch((error: unknown) => {
+    throw withGrafanaErrorDetail(error);
   });
 
   return grafanaResponseSchema.parse(response);
+}
+
+/** Adds the query error from the Grafana response body to the HTTP error message. */
+function withGrafanaErrorDetail(error: unknown): unknown {
+  if (!(error instanceof FetchError)) return error;
+  const body = grafanaErrorSchema.safeParse(error.data);
+  if (!body.success) return error;
+  return new Error(`${error.message} - ${body.data.results.A.error}`, { cause: error });
 }
 
 function getFirstFrame(response: GrafanaResponse) {
@@ -116,17 +125,13 @@ export function parseGrafanaResponse(response: GrafanaResponse): GrafanaRow[] {
   return Array.from({ length: rowCount }, (_, i) => buildRow(fields, values, i));
 }
 
-const NODE_COUNT_SQL = `select * from nodely.v_node_cnt_daily where ts < toDate(now())`;
+// Nodely's public Grafana user can only read the `grafana_pub` views behind its dashboards.
+const NODE_COUNT_SQL = `select ts, nodes
+from grafana_pub.node_telemetry_servi__global_node_count_2(from=$__fromTime, to=$__toTime)
+where ts < toDate(now())`;
 
-const NODE_TYPE_DISTRIBUTION_SQL = `with
-  (select * from mainnet.v_nodes_cnt) as nodes
-  ,(select count() from mainnet.account where is_online) as validatingNodes
-select
-'nodes' as series
-, nodes - validatingNodes - ${ALGORAND_INFRASTRUCTURE.RELAY_NODES} - ${ALGORAND_INFRASTRUCTURE.ARCHIVER_NODES} as apiNodes
-, validatingNodes as validators
-, ${ALGORAND_INFRASTRUCTURE.RELAY_NODES} as relays
-, ${ALGORAND_INFRASTRUCTURE.ARCHIVER_NODES} as archivers
+const NODE_TYPE_DISTRIBUTION_SQL = `select apiNodes, validators, relays, archivers
+from grafana_pub.node_telemetry_servi__global_node_count
 SETTINGS use_query_cache=true,query_cache_ttl=300,query_cache_nondeterministic_function_handling = 'save' ;`;
 
 export async function fetchNodeCount(): Promise<GrafanaResponse> {
@@ -136,8 +141,8 @@ export async function fetchNodeCount(): Promise<GrafanaResponse> {
     timeRange: TIME_RANGES.ONE_YEAR,
     query: {
       ...BASE_CLICKHOUSE_QUERY,
-      format: GRAFANA_FORMAT.LOGS,
-      queryType: 'logs',
+      format: GRAFANA_FORMAT.TABLE,
+      queryType: 'table',
       rawSql: NODE_COUNT_SQL,
       datasourceId: GRAFANA_DATASOURCE_IDS.CLICKHOUSE_NODES,
       intervalMs: TIME_RANGES.ONE_DAY,
@@ -172,7 +177,7 @@ export async function fetchNodesByCountry(timestamp: string): Promise<Geographic
       ...BASE_CLICKHOUSE_QUERY,
       format: GRAFANA_FORMAT.TABLE,
       queryType: 'table',
-      rawSql: 'select c, ftne as nodes from nodely.v_nodes_per_country_24h order by nodes desc',
+      rawSql: 'select c, nodes from grafana_pub.network__nodes_by_country order by nodes desc',
       datasourceId: GRAFANA_DATASOURCE_IDS.CLICKHOUSE_NODES,
       intervalMs: TIME_RANGES.ONE_DAY,
       maxDataPoints: 200,
