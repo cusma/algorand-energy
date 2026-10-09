@@ -126,11 +126,12 @@ export function parseGrafanaResponse(response: GrafanaResponse): GrafanaRow[] {
 }
 
 // Nodely's public Grafana user can only read the `grafana_pub` views behind its dashboards.
+// Daily Chao-1 estimate of full-time mainnet nodes (Network dashboard, "Full-time node estimate").
 const NODE_COUNT_SQL = `select ts, nodes
-from grafana_pub.node_telemetry_servi__global_node_count_2(from=$__fromTime, to=$__toTime)
+from grafana_pub.network__full_time_node_estimate(from=$__fromTime, to=$__toTime)
 where ts < toDate(now())`;
 
-const NODE_TYPE_DISTRIBUTION_SQL = `select apiNodes, validators, relays, archivers
+const VALIDATOR_COUNT_SQL = `select validators
 from grafana_pub.node_telemetry_servi__global_node_count
 SETTINGS use_query_cache=true,query_cache_ttl=300,query_cache_nondeterministic_function_handling = 'save' ;`;
 
@@ -151,7 +152,7 @@ export async function fetchNodeCount(): Promise<GrafanaResponse> {
   });
 }
 
-export async function fetchNodeTypeDistribution(): Promise<GrafanaResponse> {
+export async function fetchValidatorCount(): Promise<GrafanaResponse> {
   return queryGrafana({
     datasourceUid: GRAFANA_DATASOURCES.CLICKHOUSE_NODE_TYPES,
     pluginId: CLICKHOUSE_PLUGIN_ID,
@@ -160,7 +161,7 @@ export async function fetchNodeTypeDistribution(): Promise<GrafanaResponse> {
       ...BASE_CLICKHOUSE_QUERY,
       format: GRAFANA_FORMAT.TABLE,
       queryType: 'table',
-      rawSql: NODE_TYPE_DISTRIBUTION_SQL,
+      rawSql: VALIDATOR_COUNT_SQL,
       datasourceId: GRAFANA_DATASOURCE_IDS.CLICKHOUSE_NODE_TYPES,
       intervalMs: TIME_RANGES.TWO_MINUTES,
       maxDataPoints: GRAFANA_DEFAULT_MAX_DATA_POINTS,

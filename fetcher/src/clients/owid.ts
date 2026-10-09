@@ -1,6 +1,7 @@
 import { ofetch } from 'ofetch';
 
 import {
+  owidChartMetadataSchema,
   owidDataResponseSchema,
   owidMetadataResponseSchema,
   type CarbonIntensityData,
@@ -9,19 +10,33 @@ import {
   type OwidMetadataResponse,
 } from '../schemas/carbon.js';
 
-const OWID_DATA_URL = 'https://api.ourworldindata.org/v1/indicators/1077602.data.json';
-const OWID_METADATA_URL = 'https://api.ourworldindata.org/v1/indicators/1077602.metadata.json';
+// OWID gives each data release a new indicator ID; the chart always shows the latest release.
+const OWID_CHART_METADATA_URL =
+  'https://ourworldindata.org/grapher/carbon-intensity-electricity.metadata.json';
+const OWID_INDICATORS_URL = 'https://api.ourworldindata.org/v1/indicators';
 
-export async function fetchOwidData(): Promise<OwidDataResponse> {
-  const response = await ofetch(OWID_DATA_URL, {
+async function fetchCurrentIndicatorId(): Promise<number> {
+  const response = await ofetch(OWID_CHART_METADATA_URL, {
+    method: 'GET',
+    headers: { Accept: 'application/json' },
+  });
+  const [column] = Object.values(owidChartMetadataSchema.parse(response).columns);
+  if (!column) {
+    throw new Error('OWID chart metadata lists no indicator');
+  }
+  return column.owidVariableId;
+}
+
+export async function fetchOwidData(indicatorId: number): Promise<OwidDataResponse> {
+  const response = await ofetch(`${OWID_INDICATORS_URL}/${indicatorId}.data.json`, {
     method: 'GET',
     headers: { Accept: 'application/json' },
   });
   return owidDataResponseSchema.parse(response);
 }
 
-export async function fetchOwidMetadata(): Promise<OwidMetadataResponse> {
-  const response = await ofetch(OWID_METADATA_URL, {
+export async function fetchOwidMetadata(indicatorId: number): Promise<OwidMetadataResponse> {
+  const response = await ofetch(`${OWID_INDICATORS_URL}/${indicatorId}.metadata.json`, {
     method: 'GET',
     headers: { Accept: 'application/json' },
   });
@@ -77,7 +92,11 @@ function computeGlobalAverage(countries: CountryIntensity[]): number | undefined
 }
 
 export async function fetchCarbonIntensityData(timestamp: string): Promise<CarbonIntensityData> {
-  const [data, metadata] = await Promise.all([fetchOwidData(), fetchOwidMetadata()]);
+  const indicatorId = await fetchCurrentIndicatorId();
+  const [data, metadata] = await Promise.all([
+    fetchOwidData(indicatorId),
+    fetchOwidMetadata(indicatorId),
+  ]);
 
   const countries = buildCountryIntensities(data, metadata);
 

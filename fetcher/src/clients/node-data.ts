@@ -1,5 +1,5 @@
-import { ALGORAND_INFRASTRUCTURE } from '../constants.js';
-import { fetchNodeCount, fetchNodeTypeDistribution, parseGrafanaResponse } from './nodely.js';
+import { fetchRelayCounts, type RelayCounts } from './algorand-dns.js';
+import { fetchNodeCount, fetchValidatorCount, parseGrafanaResponse } from './nodely.js';
 
 import type { GrafanaResponse } from '../schemas/grafana.js';
 import type { NodeData } from '../types/nodes.js';
@@ -11,23 +11,14 @@ interface NodeTypes {
   archivers: number;
 }
 
-const DEFAULT_NODE_TYPES: NodeTypes = {
-  apiNodes: 0,
-  validators: 0,
-  relays: ALGORAND_INFRASTRUCTURE.RELAY_NODES,
-  archivers: ALGORAND_INFRASTRUCTURE.ARCHIVER_NODES,
-};
+function parseNodeTypes(
+  validatorResponse: GrafanaResponse,
+  totalNodes: number,
+  { relays, archivers }: RelayCounts
+): NodeTypes {
+  const validators = Number(parseGrafanaResponse(validatorResponse)[0]?.validators) || 0;
 
-function parseNodeTypes(response: GrafanaResponse): NodeTypes {
-  const firstRow = parseGrafanaResponse(response)[0];
-  if (!firstRow) return DEFAULT_NODE_TYPES;
-
-  return {
-    apiNodes: Number(firstRow.apiNodes) || 0,
-    validators: Number(firstRow.validators) || 0,
-    relays: Number(firstRow.relays) || ALGORAND_INFRASTRUCTURE.RELAY_NODES,
-    archivers: Number(firstRow.archivers) || ALGORAND_INFRASTRUCTURE.ARCHIVER_NODES,
-  };
+  return { apiNodes: totalNodes - validators - relays - archivers, validators, relays, archivers };
 }
 
 function parseHistoricalData(response: GrafanaResponse): { date: string; nodeCount: number }[] {
@@ -65,17 +56,23 @@ function detectNodeAnomalies(nodeTypes: NodeTypes, totalNodes: number): string[]
 export async function fetchAllNodeData(
   timestamp: string
 ): Promise<{ data: NodeData; anomalies: string[] }> {
-  const [nodeCountResponse, nodeTypeResponse] = await Promise.all([
+  const [nodeCountResponse, validatorResponse, relayCounts] = await Promise.all([
     fetchNodeCount(),
-    fetchNodeTypeDistribution(),
+    fetchValidatorCount(),
+    fetchRelayCounts(),
   ]);
 
-  const nodeTypes = parseNodeTypes(nodeTypeResponse);
-
   const historicalData = parseHistoricalData(nodeCountResponse);
+  const latestDay = historicalData.at(-1);
+  if (!latestDay) {
+    throw new Error('Nodely returned no daily node count');
+  }
 
-  const totalNodes =
-    nodeTypes.apiNodes + nodeTypes.validators + nodeTypes.relays + nodeTypes.archivers;
+  // The total is the latest daily estimate. Nodely's node type view always sums to 3717
+  // (the estimate's peak on 2025-03-29) and has fixed relay counts, so it only provides
+  // validators; relays and archivers come from the official DNS lists.
+  const totalNodes = latestDay.nodeCount;
+  const nodeTypes = parseNodeTypes(validatorResponse, totalNodes, relayCounts);
 
   const anomalies = detectNodeAnomalies(nodeTypes, totalNodes);
   if (anomalies.length > 0) {
@@ -90,7 +87,7 @@ export async function fetchAllNodeData(
       relays: nodeTypes.relays,
       archivers: nodeTypes.archivers,
       apiNodes: nodeTypes.apiNodes,
-      historicalData: historicalData.length > 0 ? historicalData : undefined,
+      historicalData,
     },
     anomalies,
   };

@@ -17,12 +17,3 @@ export const GRAFANA_DATASOURCE_IDS = {
   CLICKHOUSE_NODES: 10,
   CLICKHOUSE_NODE_TYPES: 8,
 } as const;
-
-/**
- * Fixed node counts for Algorand Foundation infrastructure.
- * @see https://developer.algorand.org/docs/get-details/algorand-networks/mainnet/
- */
-export const ALGORAND_INFRASTRUCTURE = {
-  RELAY_NODES: 78,
-  ARCHIVER_NODES: 19,
-} as const;

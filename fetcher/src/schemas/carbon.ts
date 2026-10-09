@@ -1,5 +1,10 @@
 import { z } from 'zod';
 
+/** Grapher chart metadata: each column names the indicator release that the chart shows */
+export const owidChartMetadataSchema = z.object({
+  columns: z.record(z.string(), z.object({ owidVariableId: z.number() })),
+});
+
 export const owidDataResponseSchema = z.object({
   values: z.array(z.number()),
   years: z.array(z.number()),
