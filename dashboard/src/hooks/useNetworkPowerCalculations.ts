@@ -42,14 +42,17 @@ function computeMetrics(
   const mainnetEnergyKWh = mainnetPowerKW * HOURS_PER_YEAR;
   const validatorEnergyKWh = validatorPowerKW * HOURS_PER_YEAR;
 
-  // Countries with missing carbon intensity contribute 0 to the weighted sum
-  // but their node percentage still dilutes the total, biasing the average downward.
-  const weightedAvgEmissionsIntensity = emissionsData.reduce((sum, country) => {
-    if (country.carbonIntensity !== null) {
-      return sum + (country.nodePercentage / 100) * country.carbonIntensity;
-    }
-    return sum;
-  }, 0);
+  // Countries without carbon intensity data are left out of the average,
+  // so they do not count as zero-emission nodes.
+  let knownNodePercentage = 0;
+  let weightedIntensitySum = 0;
+  for (const country of emissionsData) {
+    if (country.carbonIntensity === null) continue;
+    knownNodePercentage += country.nodePercentage;
+    weightedIntensitySum += country.nodePercentage * country.carbonIntensity;
+  }
+  const weightedAvgEmissionsIntensity =
+    knownNodePercentage > 0 ? weightedIntensitySum / knownNodePercentage : 0;
 
   const mainnetDistributedLedger =
     LEDGER_SIZE_GB * nodeData.totalNodes +

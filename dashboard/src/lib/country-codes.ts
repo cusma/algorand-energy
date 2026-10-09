@@ -81,6 +81,13 @@ export const ISO_2_TO_3: Record<string, string> = {
   CL: 'CHL',
   BO: 'BOL',
   KW: 'KWT',
+  MO: 'MAC',
+  ME: 'MNE',
+  CM: 'CMR',
+  GE: 'GEO',
+  SO: 'SOM',
+  SD: 'SDN',
+  MD: 'MDA',
 };
 
 /** ISO alpha-2 code to English country name */
@@ -166,6 +173,13 @@ export const COUNTRY_NAMES: Record<string, string> = {
   CL: 'Chile',
   BO: 'Bolivia',
   KW: 'Kuwait',
+  MO: 'Macao',
+  ME: 'Montenegro',
+  CM: 'Cameroon',
+  GE: 'Georgia',
+  SO: 'Somalia',
+  SD: 'Sudan',
+  MD: 'Moldova',
 };
 
 const REGIONAL_INDICATOR_OFFSET = 0x1f1a5;
