@@ -54,7 +54,7 @@ jobs:
           git commit -m "chore: update energy data [automated]"
           git push
 
-  deploy:
+  build:
     needs: fetch-and-commit
     if: |
       needs.fetch-and-commit.outputs.data-changed == 'true' ||
@@ -63,16 +63,6 @@ jobs:
 
     permissions:
       contents: read
-      pages: write
-      id-token: write
-
-    concurrency:
-      group: "pages"
-      cancel-in-progress: false
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     runs-on: ubuntu-latest
 
@@ -99,14 +89,32 @@ jobs:
           cd dashboard
           npm run build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'dashboard/dist'
-          overwrite: true
+
+  deploy:
+    needs: build
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
       - name: Deploy to GitHub Pages
         id: deployment
