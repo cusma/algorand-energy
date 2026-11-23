@@ -1,197 +1,88 @@
-import { FetchError, ofetch } from 'ofetch';
+import { ofetch, type FetchContext } from 'ofetch';
+import { z } from 'zod';
 
-import { TIME_RANGES, GRAFANA_DATASOURCES, GRAFANA_DATASOURCE_IDS } from '../constants.js';
 import {
-  grafanaErrorSchema,
-  grafanaResponseSchema,
-  type GrafanaResponse,
-} from '../schemas/grafana.js';
+  countryNodesSchema,
+  dailyNodeCountSchema,
+  panelSchema,
+  registeredAccountsSchema,
+} from '../schemas/nodely.js';
 
 import type { GeographicalData } from '../types/geographical.js';
 
-const NODELY_QUERY_ENDPOINT = 'https://g.nodely.io/api/ds/query';
-const CLICKHOUSE_PLUGIN_ID = 'grafana-clickhouse-datasource';
-const CLICKHOUSE_PLUGIN_VERSION = '4.8.2';
-const GRAFANA_REQUEST_ID = 'SQR100';
-const GRAFANA_DEFAULT_MAX_DATA_POINTS = 751;
+// Nodely's public graphs site serves each chart as a JSON table read from a fixed view.
+// https://g.nodely.io/api/v1/catalog describes every panel.
+const NODELY_PANEL_API = 'https://g.nodely.io/api/v1/p';
+const USER_AGENT = 'algorand-energy-fetcher (+https://github.com/cusma/algorand-energy)';
 
-/** Grafana response format identifiers */
-const GRAFANA_FORMAT = {
-  TABLE: 1,
-} as const;
+// Nodely is behind Cloudflare, which returns 520-524 while the origin server is down or slow.
+const RETRY_STATUS_CODES = [408, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524];
+const MAX_RETRIES = 5;
+const RETRY_DELAY_MS = 60_000;
 
-const DEFAULT_QUERY_META = {
-  builderOptions: {
-    columns: [],
-    database: '',
-    limit: 1000,
-    mode: 'list',
-    queryType: 'table',
-    table: '',
-  },
-  // Grafana returns each day at midnight in this timezone; UTC keeps the ISO dates on the same day.
-  timezone: 'UTC',
-};
-
-const BASE_CLICKHOUSE_QUERY = {
-  editorType: 'sql',
-  meta: DEFAULT_QUERY_META,
-  pluginVersion: CLICKHOUSE_PLUGIN_VERSION,
-};
-
-const COMMON_GRAFANA_HEADERS = {
-  accept: 'application/json, text/plain, */*',
-  'accept-language': 'en-US,en;q=0.9',
-  'content-type': 'application/json',
-  origin: 'https://g.nodely.io',
-  referer:
-    'https://g.nodely.io/d/telemetrymain/node-telemetry-service?orgId=1&from=now-24h&to=now&timezone=browser',
-  'user-agent':
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
-  'x-grafana-org-id': '1',
-};
-
-interface GrafanaQueryConfig {
-  datasourceUid: string;
-  pluginId: string;
-  query: Record<string, unknown>;
-  timeRange: number;
+/** Logs each retry, so that the CI log shows transient Nodely errors, and returns its delay. */
+function logRetry(panel: string, context: FetchContext): number {
+  const retriesLeft = typeof context.options.retry === 'number' ? context.options.retry : 0;
+  const retry = MAX_RETRIES - retriesLeft + 1;
+  const cause = context.response ? `HTTP ${context.response.status}` : context.error?.message;
+  console.warn(
+    `⚠ Nodely panel ${panel} failed (${cause}); retry ${retry}/${MAX_RETRIES} in ${RETRY_DELAY_MS / 1000}s`
+  );
+  return RETRY_DELAY_MS;
 }
 
-async function queryGrafana(config: GrafanaQueryConfig): Promise<GrafanaResponse> {
-  const now = Date.now();
-  const response = await ofetch(NODELY_QUERY_ENDPOINT, {
-    method: 'POST',
-    params: {
-      ds_type: config.pluginId,
-      requestId: GRAFANA_REQUEST_ID,
-    },
-    body: {
-      queries: [
-        {
-          datasource: {
-            type: config.pluginId,
-            uid: config.datasourceUid,
-          },
-          refId: 'A',
-          ...config.query,
-        },
-      ],
-      from: String(now - config.timeRange),
-      to: String(now),
-    },
-    headers: {
-      ...COMMON_GRAFANA_HEADERS,
-      'x-datasource-uid': config.datasourceUid,
-      'x-plugin-id': config.pluginId,
-    },
-  }).catch((error: unknown) => {
-    throw withGrafanaErrorDetail(error);
-  });
-
-  return grafanaResponseSchema.parse(response);
-}
-
-/** Adds the query error from the Grafana response body to the HTTP error message. */
-function withGrafanaErrorDetail(error: unknown): unknown {
-  if (!(error instanceof FetchError)) return error;
-  const body = grafanaErrorSchema.safeParse(error.data);
-  if (!body.success) return error;
-  return new Error(`${error.message} - ${body.data.results.A.error}`, { cause: error });
-}
-
-function getFirstFrame(response: GrafanaResponse) {
-  return response.results?.A?.frames?.[0];
-}
-
-export type GrafanaRow = Record<string, unknown>;
-
-function buildRow(fields: { name: string }[], values: unknown[][], rowIndex: number): GrafanaRow {
-  const row: GrafanaRow = {};
-  for (let col = 0; col < fields.length; col++) {
-    row[fields[col].name] = values[col][rowIndex];
+function parsePanelData<T>(panel: string, schema: z.ZodType<T>, data: unknown): T {
+  const result = schema.safeParse(data);
+  if (!result.success) {
+    throw new Error(`Unexpected data from Nodely panel ${panel}: ${z.prettifyError(result.error)}`);
   }
-  return row;
+  return result.data;
 }
 
-export function parseGrafanaResponse(response: GrafanaResponse): GrafanaRow[] {
-  const frame = getFirstFrame(response);
-  if (!frame) return [];
-
-  const { fields } = frame.schema;
-  const { values } = frame.data;
-  const rowCount = values[0]?.length ?? 0;
-
-  return Array.from({ length: rowCount }, (_, i) => buildRow(fields, values, i));
-}
-
-// Nodely's public Grafana user can only read the `grafana_pub` views behind its dashboards.
-// Daily Chao-1 estimate of full-time mainnet nodes (Network dashboard, "Full-time node estimate").
-const NODE_COUNT_SQL = `select ts, nodes
-from grafana_pub.network__full_time_node_estimate(from=$__fromTime, to=$__toTime)
-where ts < toDate(now())`;
-
-const VALIDATOR_COUNT_SQL = `select validators
-from grafana_pub.node_telemetry_servi__global_node_count
-SETTINGS use_query_cache=true,query_cache_ttl=300,query_cache_nondeterministic_function_handling = 'save' ;`;
-
-export async function fetchNodeCount(): Promise<GrafanaResponse> {
-  return queryGrafana({
-    datasourceUid: GRAFANA_DATASOURCES.CLICKHOUSE_NODES,
-    pluginId: CLICKHOUSE_PLUGIN_ID,
-    timeRange: TIME_RANGES.ONE_YEAR,
-    query: {
-      ...BASE_CLICKHOUSE_QUERY,
-      format: GRAFANA_FORMAT.TABLE,
-      queryType: 'table',
-      rawSql: NODE_COUNT_SQL,
-      datasourceId: GRAFANA_DATASOURCE_IDS.CLICKHOUSE_NODES,
-      intervalMs: TIME_RANGES.ONE_DAY,
-      maxDataPoints: GRAFANA_DEFAULT_MAX_DATA_POINTS,
-    },
+/** Fetches a panel and returns its rows as objects keyed by column name. */
+async function fetchPanel<T>(
+  panel: string,
+  rowSchema: z.ZodType<T>,
+  query?: Record<string, string>
+): Promise<T[]> {
+  const response = await ofetch(`${NODELY_PANEL_API}/${panel}`, {
+    query,
+    headers: { accept: 'application/json', 'user-agent': USER_AGENT },
+    retry: MAX_RETRIES,
+    retryDelay: (context) => logRetry(panel, context),
+    retryStatusCodes: RETRY_STATUS_CODES,
   });
+  const { cols, rows } = parsePanelData(panel, panelSchema, response);
+  const records = rows.map((row) => Object.fromEntries(cols.map((col, i) => [col.name, row[i]])));
+  return parsePanelData(panel, z.array(rowSchema), records);
 }
 
-export async function fetchValidatorCount(): Promise<GrafanaResponse> {
-  return queryGrafana({
-    datasourceUid: GRAFANA_DATASOURCES.CLICKHOUSE_NODE_TYPES,
-    pluginId: CLICKHOUSE_PLUGIN_ID,
-    timeRange: TIME_RANGES.SIX_HOURS,
-    query: {
-      ...BASE_CLICKHOUSE_QUERY,
-      format: GRAFANA_FORMAT.TABLE,
-      queryType: 'table',
-      rawSql: VALIDATOR_COUNT_SQL,
-      datasourceId: GRAFANA_DATASOURCE_IDS.CLICKHOUSE_NODE_TYPES,
-      intervalMs: TIME_RANGES.TWO_MINUTES,
-      maxDataPoints: GRAFANA_DEFAULT_MAX_DATA_POINTS,
-    },
-  });
+/** Daily full-time node estimates (Chao-1) for the last year, oldest first, without today. */
+export async function fetchDailyNodeCounts(): Promise<{ date: string; nodeCount: number }[]> {
+  const rows = await fetchPanel('network.count_trend', dailyNodeCountSchema, { range: '1y' });
+  return rows
+    .sort((a, b) => a.t - b.t)
+    .map((row) => ({
+      date: new Date(row.t * 1000).toISOString().split('T')[0],
+      nodeCount: row.full_time_nodes,
+    }));
+}
+
+/** Accounts registered online with a valid participation key, at the latest round. */
+export async function fetchValidatorCount(): Promise<number> {
+  const [row] = await fetchPanel('consensus.registered', registeredAccountsSchema);
+  if (!row) {
+    throw new Error('Nodely panel consensus.registered returned no row');
+  }
+  return row.registered_accounts;
 }
 
 export async function fetchNodesByCountry(timestamp: string): Promise<GeographicalData> {
-  const response = await queryGrafana({
-    datasourceUid: GRAFANA_DATASOURCES.CLICKHOUSE_NODES,
-    pluginId: CLICKHOUSE_PLUGIN_ID,
-    timeRange: TIME_RANGES.ONE_DAY,
-    query: {
-      ...BASE_CLICKHOUSE_QUERY,
-      format: GRAFANA_FORMAT.TABLE,
-      queryType: 'table',
-      rawSql: 'select c, nodes from grafana_pub.network__nodes_by_country order by nodes desc',
-      datasourceId: GRAFANA_DATASOURCE_IDS.CLICKHOUSE_NODES,
-      intervalMs: TIME_RANGES.ONE_DAY,
-      maxDataPoints: 200,
-    },
-  });
-
-  const rows = parseGrafanaResponse(response);
+  // The map panel lists every country with 3 or more nodes; network.countries stops at 25.
+  const rows = await fetchPanel('network.locations', countryNodesSchema);
 
   const nodesByCountry = rows
-    .map((row) => ({
-      countryCode: String(row.c ?? '').toUpperCase(),
-      nodeCount: Number(row.nodes ?? 0),
-    }))
+    .map((row) => ({ countryCode: row.cc.toUpperCase(), nodeCount: row.nodes }))
     .filter((item) => item.countryCode && item.nodeCount > 0)
     .sort((a, b) => b.nodeCount - a.nodeCount);
 
@@ -200,8 +91,8 @@ export async function fetchNodesByCountry(timestamp: string): Promise<Geographic
     nodesByCountry,
     totalCountries: nodesByCountry.length,
     metadata: {
-      source: 'Nodely Node Telemetry Service',
-      description: 'Distribution of Algorand nodes by country (last 24h)',
+      source: 'Nodely public graphs (network.locations)',
+      description: 'Distribution of Algorand nodes by country (last 24h, countries with 3+ nodes)',
     },
   };
 }

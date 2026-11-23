@@ -1,7 +1,6 @@
 import { fetchRelayCounts, type RelayCounts } from './algorand-dns.js';
-import { fetchNodeCount, fetchValidatorCount, parseGrafanaResponse } from './nodely.js';
+import { fetchDailyNodeCounts, fetchValidatorCount } from './nodely.js';
 
-import type { GrafanaResponse } from '../schemas/grafana.js';
 import type { NodeData } from '../types/nodes.js';
 
 interface NodeTypes {
@@ -11,24 +10,12 @@ interface NodeTypes {
   archivers: number;
 }
 
-function parseNodeTypes(
-  validatorResponse: GrafanaResponse,
+function toNodeTypes(
   totalNodes: number,
+  validators: number,
   { relays, archivers }: RelayCounts
 ): NodeTypes {
-  const validators = Number(parseGrafanaResponse(validatorResponse)[0]?.validators) || 0;
-
   return { apiNodes: totalNodes - validators - relays - archivers, validators, relays, archivers };
-}
-
-function parseHistoricalData(response: GrafanaResponse): { date: string; nodeCount: number }[] {
-  return parseGrafanaResponse(response).flatMap((row) => {
-    const ts = row.ts;
-    if (typeof ts !== 'string' && typeof ts !== 'number') return [];
-    const date = new Date(ts);
-    if (isNaN(date.getTime())) return [];
-    return [{ date: date.toISOString().split('T')[0], nodeCount: Number(row.nodes ?? 0) }];
-  });
 }
 
 function detectNodeAnomalies(nodeTypes: NodeTypes, totalNodes: number): string[] {
@@ -56,23 +43,21 @@ function detectNodeAnomalies(nodeTypes: NodeTypes, totalNodes: number): string[]
 export async function fetchAllNodeData(
   timestamp: string
 ): Promise<{ data: NodeData; anomalies: string[] }> {
-  const [nodeCountResponse, validatorResponse, relayCounts] = await Promise.all([
-    fetchNodeCount(),
+  const [historicalData, validators, relayCounts] = await Promise.all([
+    fetchDailyNodeCounts(),
     fetchValidatorCount(),
     fetchRelayCounts(),
   ]);
 
-  const historicalData = parseHistoricalData(nodeCountResponse);
   const latestDay = historicalData.at(-1);
   if (!latestDay) {
     throw new Error('Nodely returned no daily node count');
   }
 
-  // The total is the latest daily estimate. Nodely's node type view always sums to 3717
-  // (the estimate's peak on 2025-03-29) and has fixed relay counts, so it only provides
-  // validators; relays and archivers come from the official DNS lists.
+  // The total is the latest daily full-time node estimate. Validators are the accounts
+  // registered online; relays and archivers come from the official DNS lists.
   const totalNodes = latestDay.nodeCount;
-  const nodeTypes = parseNodeTypes(validatorResponse, totalNodes, relayCounts);
+  const nodeTypes = toNodeTypes(totalNodes, validators, relayCounts);
 
   const anomalies = detectNodeAnomalies(nodeTypes, totalNodes);
   if (anomalies.length > 0) {
