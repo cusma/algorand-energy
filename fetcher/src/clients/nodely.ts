@@ -31,20 +31,26 @@ function logRetry(panel: string, context: FetchContext): number {
   return RETRY_DELAY_MS;
 }
 
+/** Parses panel data; on failure, reports only the first problem, not one line per row. */
 function parsePanelData<T>(panel: string, schema: z.ZodType<T>, data: unknown): T {
   const result = schema.safeParse(data);
   if (!result.success) {
-    throw new Error(`Unexpected data from Nodely panel ${panel}: ${z.prettifyError(result.error)}`);
+    const [issue, ...others] = result.error.issues;
+    const where = issue.path.map(String).join('.') || 'top level';
+    const more = others.length > 0 ? ` (and ${others.length} more)` : '';
+    throw new Error(
+      `Unexpected data from Nodely panel ${panel}: ${issue.message} at ${where}${more}`
+    );
   }
   return result.data;
 }
 
 /** Fetches a panel and returns its rows as objects keyed by column name. */
-async function fetchPanel<T>(
+async function fetchPanel<S extends z.ZodObject>(
   panel: string,
-  rowSchema: z.ZodType<T>,
+  rowSchema: S,
   query?: Record<string, string>
-): Promise<T[]> {
+): Promise<z.infer<S>[]> {
   const response = await ofetch(`${NODELY_PANEL_API}/${panel}`, {
     query,
     headers: { accept: 'application/json', 'user-agent': USER_AGENT },
@@ -53,7 +59,14 @@ async function fetchPanel<T>(
     retryStatusCodes: RETRY_STATUS_CODES,
   });
   const { cols, rows } = parsePanelData(panel, panelSchema, response);
-  const records = rows.map((row) => Object.fromEntries(cols.map((col, i) => [col.name, row[i]])));
+  const names = cols.map((col) => col.name);
+  const missing = Object.keys(rowSchema.shape).filter((name) => !names.includes(name));
+  if (missing.length > 0) {
+    throw new Error(
+      `Nodely panel ${panel} has no column ${missing.join(', ')}; it has ${names.join(', ')}`
+    );
+  }
+  const records = rows.map((row) => Object.fromEntries(names.map((name, i) => [name, row[i]])));
   return parsePanelData(panel, z.array(rowSchema), records);
 }
 
@@ -78,11 +91,12 @@ export async function fetchValidatorCount(): Promise<number> {
 }
 
 export async function fetchNodesByCountry(timestamp: string): Promise<GeographicalData> {
-  // The map panel lists every country with 3 or more nodes; network.countries stops at 25.
-  const rows = await fetchPanel('network.locations', countryNodesSchema);
+  // The only per-country panel; it stops at the 25 largest countries. The map panel
+  // (network.locations) counts H3 hexagons, not countries, since 2026-11-25.
+  const rows = await fetchPanel('network.countries', countryNodesSchema);
 
   const nodesByCountry = rows
-    .map((row) => ({ countryCode: row.cc.toUpperCase(), nodeCount: row.nodes }))
+    .map((row) => ({ countryCode: row.label.toUpperCase(), nodeCount: row.nodes }))
     .filter((item) => item.countryCode && item.nodeCount > 0)
     .sort((a, b) => b.nodeCount - a.nodeCount);
 
@@ -91,8 +105,8 @@ export async function fetchNodesByCountry(timestamp: string): Promise<Geographic
     nodesByCountry,
     totalCountries: nodesByCountry.length,
     metadata: {
-      source: 'Nodely public graphs (network.locations)',
-      description: 'Distribution of Algorand nodes by country (last 24h, countries with 3+ nodes)',
+      source: 'Nodely public graphs (network.countries)',
+      description: 'Distribution of Algorand nodes by country (last 24h, 25 largest countries)',
     },
   };
 }

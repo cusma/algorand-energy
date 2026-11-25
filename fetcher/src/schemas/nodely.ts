@@ -17,8 +17,8 @@ export const registeredAccountsSchema = z.object({
   registered_accounts: z.number(),
 });
 
-/** `network.locations` row: nodes per country code, averaged over the last 24 hours. */
+/** `network.countries` row: nodes per country code (25 largest), averaged over the last 24 hours. */
 export const countryNodesSchema = z.object({
-  cc: z.string(),
+  label: z.string(),
   nodes: z.number(),
 });
