@@ -1,21 +1,21 @@
 {
-  "timestamp": "2026-11-25T17:49:38.768Z",
+  "timestamp": "2026-11-26T10:30:56.122Z",
   "nodesByCountry": [
     {
       "countryCode": "US",
-      "nodeCount": 972
+      "nodeCount": 943
     },
     {
       "countryCode": "DE",
-      "nodeCount": 284
+      "nodeCount": 283
     },
     {
       "countryCode": "IE",
-      "nodeCount": 134
+      "nodeCount": 132
     },
     {
       "countryCode": "FR",
-      "nodeCount": 120
+      "nodeCount": 119
     },
     {
       "countryCode": "GB",
@@ -31,19 +31,19 @@
     },
     {
       "countryCode": "NL",
-      "nodeCount": 63
+      "nodeCount": 62
     },
     {
       "countryCode": "FI",
-      "nodeCount": 56
+      "nodeCount": 57
     },
     {
       "countryCode": "PL",
-      "nodeCount": 39
+      "nodeCount": 38
     },
     {
       "countryCode": "IT",
-      "nodeCount": 36
+      "nodeCount": 37
     },
     {
       "countryCode": "JP",
@@ -78,10 +78,6 @@
       "nodeCount": 13
     },
     {
-      "countryCode": "VN",
-      "nodeCount": 12
-    },
-    {
       "countryCode": "BE",
       "nodeCount": 11
     },
@@ -90,8 +86,12 @@
       "nodeCount": 11
     },
     {
-      "countryCode": "IN",
+      "countryCode": "VN",
       "nodeCount": 11
+    },
+    {
+      "countryCode": "IN",
+      "nodeCount": 10
     },
     {
       "countryCode": "MX",
